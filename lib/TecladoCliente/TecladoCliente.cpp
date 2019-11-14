@@ -140,3 +140,8 @@ void TecladoCliente::configurarSwitch4(int configSwitch) {
       break;
   }
 }
+
+int TecladoCliente::get_id()
+{
+  return id;
+}

@@ -15,6 +15,7 @@ class TecladoCliente {
     void configurar(int configwitch1, int configwitch2, int configwitch3, int configwitch4);
     void actualizar();
     void asignarId(int id);
+    int get_id();
   private:
     int id;
 
