@@ -15,6 +15,11 @@ TecladoCliente::TecladoCliente(int pinSwitch1, int pinSwitch2, int pinSwitch3, i
   pinSwitch1(pinSwitch1), pinSwitch2(pinSwitch2), pinSwitch3(pinSwitch3), pinSwitch4(pinSwitch4),
   accionSwitch1(NULL), accionSwitch2(NULL), accionSwitch3(NULL), accionSwitch4(NULL) {
 
+  pinMode(pinSwitch1, INPUT);
+  pinMode(pinSwitch2, INPUT);
+  pinMode(pinSwitch3, INPUT);
+  pinMode(pinSwitch4, INPUT);
+
   estadoAnteriorPinSwitch1 = LOW;
   estadoAnteriorPinSwitch2 = LOW;
   estadoAnteriorPinSwitch3 = LOW;
@@ -47,6 +52,7 @@ void TecladoCliente::actualizar() {
   estadoActualPinSwitch3 = digitalRead(pinSwitch3);
   estadoActualPinSwitch4 = digitalRead(pinSwitch4);
 
+  // Serial.println(estadoActualPinSwitch4);
   accionSwitch1->ejecutar(estadoActualPinSwitch1, estadoAnteriorPinSwitch1);
   accionSwitch2->ejecutar(estadoActualPinSwitch2, estadoAnteriorPinSwitch2);
   accionSwitch3->ejecutar(estadoActualPinSwitch3, estadoAnteriorPinSwitch3);

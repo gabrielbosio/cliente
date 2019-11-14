@@ -4,10 +4,10 @@
 
 // Pin definition
 // Buttons
-#define PIN_SWITCH1 15
-#define PIN_SWITCH2 4
-#define PIN_SWITCH3 18
-#define PIN_SWITCH4 19
+#define PIN_SWITCH1 5
+#define PIN_SWITCH2 18
+#define PIN_SWITCH3 22
+#define PIN_SWITCH4 23
 // 7 segments
 #define SEGMENT_A 13
 #define SEGMENT_B 12
@@ -17,26 +17,27 @@
 #define SEGMENT_F 25
 #define SEGMENT_G 33
 #define MUX_SEGMENT_ZERO 32
-#define MUX_SEGMENT_ONE 23
+#define MUX_SEGMENT_ONE 19
 
 
 DisplayHelper *displayHelper;
 TecladoCliente *tecladoCliente;
 TaskHandle_t Task1;
 
+int count = 1;
+
 // Used to move display behaviour has paralel task into the secondary core
 void Task1code(void *pvParameters)
 {
   for (;;)
   {
-    displayHelper->display_number(88);
+    displayHelper->display_number(count);
   }
 }
 
 void setup()
 {
   Serial.begin(115200);
-  pinMode(PIN_SWITCH1, INPUT);
   displayHelper = new DisplayHelper(SEGMENT_A, SEGMENT_B, SEGMENT_C, SEGMENT_D, SEGMENT_E,
                                     SEGMENT_F, SEGMENT_G, MUX_SEGMENT_ZERO, MUX_SEGMENT_ONE);
   tecladoCliente = new TecladoCliente(PIN_SWITCH1, PIN_SWITCH2, PIN_SWITCH3, PIN_SWITCH4);
@@ -55,5 +56,6 @@ void setup()
   void loop()
   {
     tecladoCliente->actualizar();
+    count  = (count + 1)%100;
     delay(100);
   }
