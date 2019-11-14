@@ -29,6 +29,8 @@ void display_id_number(void *pvParameters)
 {
   for (;;)
   {
+    // displayHelper->display_loading();
+    // displayHelper->display_stand_by();
     displayHelper->display_number(tecladoCliente->get_id());
   }
 }
