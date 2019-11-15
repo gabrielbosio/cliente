@@ -2,6 +2,19 @@
 
 #include "DisplayHelper.h"
 
+// pin definitions
+int SEGMENT_A = 18;
+int SEGMENT_B = 19;
+int SEGMENT_C = 21;
+int SEGMENT_D = 16;
+int SEGMENT_E = 17;
+int SEGMENT_F = 22;
+int SEGMENT_G = 23;
+
+// mux definitions
+int MUX_0 = 2;
+int MUX_1 = 4;
+
 DisplayHelper::DisplayHelper(int a, int b, int c, int d, int e, int f, int g, int mux_0, int mux_1) {
     pinMode(a, OUTPUT);
     pinMode(b, OUTPUT);
@@ -26,6 +39,8 @@ DisplayHelper::DisplayHelper(int a, int b, int c, int d, int e, int f, int g, in
     // mux definitions
     MUX_0 = mux_0;
     MUX_1 = mux_1;
+    
+    seLlamoAlDisplay = false;
 }
 
 // numbers definition
@@ -50,8 +65,53 @@ int loading_six[7] = {1, 0, 0, 0, 0, 1, 0};
 int* loading[6] = {loading_one, loading_two, loading_three, loading_four, loading_five, loading_six};
 int loading_position = 0;
 int loading_count = 0;
+
+typedef struct Parametros {
+    DisplayHelper *display;
+    int number;
+} Parametros;
+
+Parametros parametros;
+
+// Used to move display behaviour has paralel task into the secondary core
+void display_id_number(void *pvParameters)
+{
+    Parametros *parametros = (Parametros*)pvParameters;
+    DisplayHelper *display = parametros->display;
+    int number = parametros->number;
+
+    for (;;)
+    {
+    // displayHelper->display_loading();
+    // displayHelper->display_stand_by();
+        display->display_number_task(number);
+    }
+}
+
 // display_number: Display number from 00 to 99
 void DisplayHelper::display_number(int number)
+{
+    parametros.display = this;
+    parametros.number = number;
+
+    if (seLlamoAlDisplay) {
+        vTaskDelete(DisplayTask);
+    }
+
+    seLlamoAlDisplay = true;
+
+    // TODO - Check how we can move this to the DisplayHelper library
+    xTaskCreatePinnedToCore(
+      display_id_number,    /* Task function. */
+      "display_id_number",      /* name of task. */
+      100000,        /* Stack size of task */
+      &parametros,         /* parameter of the task */
+      1,            /* priority of the task */
+      &DisplayTask, /* Task handle to keep track of created task */
+      1);           /* pin task to core 0 */
+}
+
+void DisplayHelper::display_number_task(int number)
 {
     int first_digit = floor(number / 10);
     int second_digit = number % 10;

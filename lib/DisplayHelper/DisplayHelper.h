@@ -1,18 +1,13 @@
+#include "Arduino.h"
+#ifndef DISPLAY_HELPER_H
+#define DISPLAY_HELPER_H
+
 class DisplayHelper
 {
 private:
-    // pin definitions
-    int SEGMENT_A = 18;
-    int SEGMENT_B = 19;
-    int SEGMENT_C = 21;
-    int SEGMENT_D = 16;
-    int SEGMENT_E = 17;
-    int SEGMENT_F = 22;
-    int SEGMENT_G = 23;
 
-    // mux definitions
-    int MUX_0 = 2;
-    int MUX_1 = 4;
+    bool seLlamoAlDisplay;
+    TaskHandle_t DisplayTask;
 
 public:
     // DisplayHelper receive from a to g segments pin number and mux 0 - 1 for control displays
@@ -21,4 +16,7 @@ public:
     void display_stand_by();
     void display_loading();
     void display(int *number, int mux);
+    void display_number_task(int number);
 };
+
+#endif

@@ -1,6 +1,7 @@
 #ifndef TECLADO_CLIENTE_H
 #define TECLADO_CLIENTE_H
 
+#include "DisplayHelper.h"
 #include "AccionSwitch.h"
 
 #define NADA 1
@@ -10,13 +11,15 @@
 
 class TecladoCliente {
   public:
-    TecladoCliente(int pinSwitch1, int pinSwitch2, int pinSwitch3, int pinSwitch4);
+    TecladoCliente(int pinSwitch1, int pinSwitch2, int pinSwitch3, int pinSwitch4,
+                   DisplayHelper *display);
     void reiniciar();
     void configurar(int configwitch1, int configwitch2, int configwitch3, int configwitch4);
     void actualizar();
     void asignarId(int id);
     int get_id();
   private:
+    DisplayHelper *display;
     int id;
 
     int pinSwitch1;

@@ -10,8 +10,9 @@
 #include "AccionTiempoEspera.h"
 #include "AccionTestear.h"
 
-TecladoCliente::TecladoCliente(int pinSwitch1, int pinSwitch2, int pinSwitch3, int pinSwitch4) :
-  id(0),
+TecladoCliente::TecladoCliente(int pinSwitch1, int pinSwitch2, int pinSwitch3, int pinSwitch4,
+                               DisplayHelper *display) :
+  display(display), id(0),
   pinSwitch1(pinSwitch1), pinSwitch2(pinSwitch2), pinSwitch3(pinSwitch3), pinSwitch4(pinSwitch4),
   accionSwitch1(NULL), accionSwitch2(NULL), accionSwitch3(NULL), accionSwitch4(NULL) {
 
@@ -38,7 +39,7 @@ void TecladoCliente::reiniciar() {
 }
 
 void TecladoCliente::configurar(int configSwitch1, int configSwitch2, int configSwitch3,
-  int configSwitch4) {
+                                int configSwitch4) {
 
   configurarSwitch1(configSwitch1);
   configurarSwitch2(configSwitch2);
@@ -52,7 +53,6 @@ void TecladoCliente::actualizar() {
   estadoActualPinSwitch3 = digitalRead(pinSwitch3);
   estadoActualPinSwitch4 = digitalRead(pinSwitch4);
 
-  // Serial.println(estadoActualPinSwitch4);
   accionSwitch1->ejecutar(estadoActualPinSwitch1, estadoAnteriorPinSwitch1);
   accionSwitch2->ejecutar(estadoActualPinSwitch2, estadoAnteriorPinSwitch2);
   accionSwitch3->ejecutar(estadoActualPinSwitch3, estadoAnteriorPinSwitch3);
@@ -76,7 +76,7 @@ void TecladoCliente::configurarSwitch1(int configSwitch) {
       accionSwitch1 = new AccionLlamarMozo();
       break;
     case CONFIG:
-      accionSwitch1 = new AccionMostrarId(id);
+      accionSwitch1 = new AccionMostrarId(id, display);
       break;
     case ID:
       accionSwitch1 = new AccionAsignarId(this, 1);
