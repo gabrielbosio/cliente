@@ -1,5 +1,6 @@
 #include "TecladoCliente.h"
 #include "DisplayHelper.h"
+#include "LedMatrix.h"
 #include <Arduino.h>
 
 // Pin definition
@@ -18,10 +19,13 @@
 #define SEGMENT_G 33
 #define MUX_SEGMENT_ZERO 32
 #define MUX_SEGMENT_ONE 19
+// LedMatrix csPin
+#define LEDMATRIX_CS_PIN 5
 
 
 DisplayHelper *displayHelper;
 TecladoCliente *tecladoCliente;
+LedMatrix *ledMatrix;
 // TaskHandle_t DisplayTask;
 
 // Used to move display behaviour has paralel task into the secondary core
@@ -55,6 +59,7 @@ void setup()
                                     SEGMENT_F, SEGMENT_G, MUX_SEGMENT_ZERO, MUX_SEGMENT_ONE);
   tecladoCliente = new TecladoCliente(PIN_SWITCH1, PIN_SWITCH2, PIN_SWITCH3, PIN_SWITCH4,
                                       displayHelper);
+  ledMatrix = new LedMatrix(LEDMATRIX_CS_PIN);
   // create_task();
 }
 
