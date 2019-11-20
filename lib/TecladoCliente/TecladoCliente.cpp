@@ -11,7 +11,7 @@
 #include "AccionTestear.h"
 
 TecladoCliente::TecladoCliente(int pinSwitch1, int pinSwitch2, int pinSwitch3, int pinSwitch4,
-                               DisplayHelper *display) :
+                               Display *display) :
   display(display), id(0),
   pinSwitch1(pinSwitch1), pinSwitch2(pinSwitch2), pinSwitch3(pinSwitch3), pinSwitch4(pinSwitch4),
   accionSwitch1(NULL), accionSwitch2(NULL), accionSwitch3(NULL), accionSwitch4(NULL) {
