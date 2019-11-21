@@ -36,6 +36,7 @@ TecladoCliente::TecladoCliente(int pinSwitch1, int pinSwitch2, int pinSwitch3, i
 
 void TecladoCliente::reiniciar() {
     configurar(NORMAL, NORMAL, NORMAL, NORMAL);
+    comienzaTest = false;
 }
 
 void TecladoCliente::configurar(int configSwitch1, int configSwitch2, int configSwitch3,
@@ -47,7 +48,7 @@ void TecladoCliente::configurar(int configSwitch1, int configSwitch2, int config
     configurarSwitch4(configSwitch4);
 }
 
-void TecladoCliente::actualizar() {
+bool TecladoCliente::actualizar() {
     estadoActualPinSwitch1 = digitalRead(pinSwitch1);
     estadoActualPinSwitch2 = digitalRead(pinSwitch2);
     estadoActualPinSwitch3 = digitalRead(pinSwitch3);
@@ -62,6 +63,8 @@ void TecladoCliente::actualizar() {
     estadoAnteriorPinSwitch2 = estadoActualPinSwitch2;
     estadoAnteriorPinSwitch3 = estadoActualPinSwitch3;
     estadoAnteriorPinSwitch4 = estadoActualPinSwitch4;
+
+    return comienzaTest;
 }
 
 void TecladoCliente::asignarId(int id) {
@@ -114,7 +117,7 @@ void TecladoCliente::configurarSwitch3(int configSwitch) {
             accionSwitch3 = new AccionTiempoEspera();
             break;
         case CONFIG:
-            accionSwitch3 = new AccionTestear(this, display);
+            accionSwitch3 = new AccionTestear(this, &comienzaTest);
             break;
         case ID:
             accionSwitch3 = new AccionAsignarId(this, 3);

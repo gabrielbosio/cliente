@@ -15,11 +15,12 @@ class TecladoCliente {
                     Display* display);
         void reiniciar();
         void configurar(int configwitch1, int configwitch2, int configwitch3, int configwitch4);
-        void actualizar();
+        bool actualizar();
         void asignarId(int id);
         int get_id();
     private:
         Display* display;
+        bool comienzaTest;
         int id;
 
         int pinSwitch1;

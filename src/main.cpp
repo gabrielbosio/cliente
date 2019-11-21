@@ -1,6 +1,6 @@
-#include "TecladoCliente.h"
 #include "Display.h"
 #include "MatrizLeds.h"
+#include "TecladoCliente.h"
 #include <Arduino.h>
 
 // Definicion de pines
@@ -22,10 +22,17 @@
 // Matriz de leds
 #define CS_PIN_LEDMATRIX 5
 
-
 Display* display;
 TecladoCliente* tecladoCliente;
 MatrizLeds* matrizLeds;
+
+void testear() {
+    Serial.println("Comienza test");
+    display->mostrarNumero(88);
+    delay(1000);
+    Serial.println("Termina test");
+    tecladoCliente->reiniciar();
+}
 
 void setup() {
     Serial.begin(115200);
@@ -37,6 +44,11 @@ void setup() {
 }
 
 void loop() {
-    tecladoCliente->actualizar();
+    bool comienzaTest = tecladoCliente->actualizar();
+
+    if (comienzaTest) {
+        testear();
+    }
+
     delay(100);
 }
