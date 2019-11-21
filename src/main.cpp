@@ -1,6 +1,7 @@
 #include "Display.h"
 #include "MatrizLeds.h"
 #include "TecladoCliente.h"
+#include "Tester.h"
 #include <Arduino.h>
 
 // Definicion de pines
@@ -25,14 +26,7 @@
 Display* display;
 TecladoCliente* tecladoCliente;
 MatrizLeds* matrizLeds;
-
-void testear() {
-    Serial.println("Comienza test");
-    display->mostrarNumero(88);
-    delay(1000);
-    Serial.println("Termina test");
-    tecladoCliente->reiniciar();
-}
+Tester* tester;
 
 void setup() {
     Serial.begin(115200);
@@ -41,13 +35,15 @@ void setup() {
     tecladoCliente = new TecladoCliente(PIN_SWITCH_1, PIN_SWITCH_2, PIN_SWITCH_3, PIN_SWITCH_4,
                                         display);
     matrizLeds = new MatrizLeds(CS_PIN_LEDMATRIX);
+    tester = new Tester(display, matrizLeds);
 }
 
 void loop() {
     bool comienzaTest = tecladoCliente->actualizar();
 
     if (comienzaTest) {
-        testear();
+        tester->ejecutar();
+        tecladoCliente->reiniciar();
     }
 
     delay(100);
