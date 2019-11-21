@@ -103,7 +103,7 @@ void TecladoCliente::configurarSwitch3(int configSwitch) {
 
     switch (configSwitch) {
         case NORMAL:
-            accionSwitch3 = new AccionTiempoEspera();
+            accionSwitch3 = new AccionTiempoEspera(display);
             break;
         case CONFIG:
             accionSwitch3 = new AccionTestear(this, &comienzaTest);
