@@ -114,7 +114,7 @@ void TecladoCliente::configurarSwitch3(int configSwitch) {
             accionSwitch3 = new AccionTiempoEspera();
             break;
         case CONFIG:
-            accionSwitch3 = new AccionTestear(this);
+            accionSwitch3 = new AccionTestear(this, display);
             break;
         case ID:
             accionSwitch3 = new AccionAsignarId(this, 3);

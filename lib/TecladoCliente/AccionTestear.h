@@ -6,10 +6,11 @@
 
 class AccionTestear: public AccionSwitch {
     public:
-        AccionTestear(TecladoCliente *tecladoCliente);
+        AccionTestear(TecladoCliente *tecladoCliente, Display *display);
         void ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch);
     private:
         TecladoCliente *tecladoCliente;
+        Display *display;
 };
 
 #endif
