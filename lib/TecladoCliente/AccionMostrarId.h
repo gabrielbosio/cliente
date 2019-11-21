@@ -5,12 +5,12 @@
 #include "AccionSwitch.h"
 
 class AccionMostrarId: public AccionSwitch {
-  public:
-    AccionMostrarId(int id, Display *display);
-    void ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch);
-  private:
-    int id;
-    Display *display;
+    public:
+        AccionMostrarId(int id, Display *display);
+        void ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch);
+    private:
+        int id;
+        Display *display;
 };
 
 #endif

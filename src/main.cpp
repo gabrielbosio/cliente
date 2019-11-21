@@ -52,19 +52,17 @@ MatrizLeds *matrizLeds;
 //       1);           /* pin task to core 0 */
 // }
 
-void setup()
-{
-  Serial.begin(115200);
-  display = new Display(SEGMENTO_A, SEGMENTO_B, SEGMENTO_C, SEGMENTO_D, SEGMENTO_E,
-                                    SEGMENTO_F, SEGMENTO_G, MUX_SEGMENTO_0, MUX_SEGMENTO_1);
-  tecladoCliente = new TecladoCliente(PIN_SWITCH_1, PIN_SWITCH_2, PIN_SWITCH_3, PIN_SWITCH_4,
-                                      display);
-  matrizLeds = new MatrizLeds(CS_PIN_LEDMATRIX);
-  // create_task();
+void setup() {
+    Serial.begin(115200);
+    display = new Display(SEGMENTO_A, SEGMENTO_B, SEGMENTO_C, SEGMENTO_D, SEGMENTO_E,
+                                        SEGMENTO_F, SEGMENTO_G, MUX_SEGMENTO_0, MUX_SEGMENTO_1);
+    tecladoCliente = new TecladoCliente(PIN_SWITCH_1, PIN_SWITCH_2, PIN_SWITCH_3, PIN_SWITCH_4,
+                                        display);
+    matrizLeds = new MatrizLeds(CS_PIN_LEDMATRIX);
+    // create_task();
 }
 
-void loop()
-{
-  tecladoCliente->actualizar();
-  delay(100);
+void loop() {
+    tecladoCliente->actualizar();
+    delay(100);
 }

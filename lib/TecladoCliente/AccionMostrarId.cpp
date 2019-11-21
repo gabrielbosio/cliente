@@ -5,7 +5,7 @@ AccionMostrarId::AccionMostrarId(int id, Display *display) :
   id(id), display(display) {}
 
 void AccionMostrarId::ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch) {
-  if (estadoActualPinSwitch == HIGH && estadoAnteriorPinSwitch == LOW) {
-    display->mostrarNumero(id);
-  }
+    if (estadoActualPinSwitch == HIGH && estadoAnteriorPinSwitch == LOW) {
+        display->mostrarNumero(id);
+    }
 }

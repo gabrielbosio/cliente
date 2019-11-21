@@ -5,11 +5,11 @@
 #include "TecladoCliente.h"
 
 class AccionConfigId: public AccionSwitch {
-  public:
-    AccionConfigId(TecladoCliente *tecladoCliente);
-    void ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch);
-  private:
-    TecladoCliente *tecladoCliente;
+    public:
+        AccionConfigId(TecladoCliente *tecladoCliente);
+        void ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch);
+    private:
+        TecladoCliente *tecladoCliente;
 };
 
 #endif
