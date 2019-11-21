@@ -18,11 +18,13 @@ void MatrizLeds::enviarDatos(uint8_t registro, uint8_t datos) {
     SPI.transfer(datos);
     digitalWrite(this->csPin, HIGH);
 }
+
 void MatrizLeds::apagar() {
     for (uint8_t reg = 1; reg < 9; reg++) {
         this->enviarDatos(reg, 0);
     }
 }
+
 void MatrizLeds::encender() {
     for (uint8_t reg = 1; reg < 9; reg++) {
         this->enviarDatos(reg, 255);

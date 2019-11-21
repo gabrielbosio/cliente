@@ -20,33 +20,33 @@ class TecladoCliente {
         int get_id();
     private:
         Display* display;
-        bool comienzaTest;
-        int id;
+        bool comienzaTest = false;
+        int id = 0;
 
         int pinSwitch1;
         int pinSwitch2;
         int pinSwitch3;
         int pinSwitch4;
 
-        int estadoAnteriorPinSwitch1;
-        int estadoAnteriorPinSwitch2;
-        int estadoAnteriorPinSwitch3;
-        int estadoAnteriorPinSwitch4;
+        int estadoAnteriorPinSwitch1 = LOW;
+        int estadoAnteriorPinSwitch2 = LOW;
+        int estadoAnteriorPinSwitch3 = LOW;
+        int estadoAnteriorPinSwitch4 = LOW;
 
-        int estadoActualPinSwitch1;
-        int estadoActualPinSwitch2;
-        int estadoActualPinSwitch3;
-        int estadoActualPinSwitch4;
+        int estadoActualPinSwitch1 = LOW;
+        int estadoActualPinSwitch2 = LOW;
+        int estadoActualPinSwitch3 = LOW;
+        int estadoActualPinSwitch4 = LOW;
 
         void configurarSwitch1(int config);
         void configurarSwitch2(int config);
         void configurarSwitch3(int config);
         void configurarSwitch4(int config);
 
-        AccionSwitch* accionSwitch1;
-        AccionSwitch* accionSwitch2;
-        AccionSwitch* accionSwitch3;
-        AccionSwitch* accionSwitch4;
+        AccionSwitch* accionSwitch1 = NULL;
+        AccionSwitch* accionSwitch2 = NULL;
+        AccionSwitch* accionSwitch3 = NULL;
+        AccionSwitch* accionSwitch4 = NULL;
 };
 
 #endif

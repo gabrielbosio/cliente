@@ -12,24 +12,13 @@
 
 TecladoCliente::TecladoCliente(int pinSwitch1, int pinSwitch2, int pinSwitch3, int pinSwitch4,
                                Display* display) :
-    display(display), id(0),
-    pinSwitch1(pinSwitch1), pinSwitch2(pinSwitch2), pinSwitch3(pinSwitch3), pinSwitch4(pinSwitch4),
-    accionSwitch1(NULL), accionSwitch2(NULL), accionSwitch3(NULL), accionSwitch4(NULL) {
+    display(display), pinSwitch1(pinSwitch1), pinSwitch2(pinSwitch2), pinSwitch3(pinSwitch3),
+    pinSwitch4(pinSwitch4) {
 
     pinMode(pinSwitch1, INPUT);
     pinMode(pinSwitch2, INPUT);
     pinMode(pinSwitch3, INPUT);
     pinMode(pinSwitch4, INPUT);
-
-    estadoAnteriorPinSwitch1 = LOW;
-    estadoAnteriorPinSwitch2 = LOW;
-    estadoAnteriorPinSwitch3 = LOW;
-    estadoAnteriorPinSwitch4 = LOW;
-
-    estadoActualPinSwitch1 = LOW;
-    estadoActualPinSwitch2 = LOW;
-    estadoActualPinSwitch3 = LOW;
-    estadoActualPinSwitch4 = LOW;
 
     reiniciar();
 }

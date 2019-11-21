@@ -8,8 +8,6 @@ class AccionNula: public AccionSwitch {
     public:
         AccionNula();
         void ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch);
-    private:
-        TecladoCliente* tecladoCliente;
 };
 
 #endif
