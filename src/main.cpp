@@ -26,31 +26,6 @@
 Display* display;
 TecladoCliente* tecladoCliente;
 MatrizLeds* matrizLeds;
-// TaskHandle_t DisplayTask;
-
-// Used to move display behaviour has paralel task into the secondary core
-// void display_id_number(void* pvParameters)
-// {
-//   for (;;)
-//   {
-//     // display->display_loading();
-//     // display->display_stand_by();
-//     display->display_number(tecladoCliente->get_id());
-//   }
-// }
-
-// void create_task() {
-//   vTaskDelete(DisplayTask);
-//   // TODO - Check how we can move this to the Display library
-//   xTaskCreatePinnedToCore(
-//       display_id_number,    /* Task function. */
-//       "display_id_number",      /* name of task. */
-//       10000,        /* Stack size of task */
-//       NULL,         /* parameter of the task */
-//       1,            /* priority of the task */
-//       &DisplayTask, /* Task handle to keep track of created task */
-//       1);           /* pin task to core 0 */
-// }
 
 void setup() {
     Serial.begin(115200);
@@ -59,7 +34,6 @@ void setup() {
     tecladoCliente = new TecladoCliente(PIN_SWITCH_1, PIN_SWITCH_2, PIN_SWITCH_3, PIN_SWITCH_4,
                                         display);
     matrizLeds = new MatrizLeds(CS_PIN_LEDMATRIX);
-    // create_task();
 }
 
 void loop() {
