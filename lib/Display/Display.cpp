@@ -13,29 +13,8 @@ int SEGMENTO_G = 23;
 int MUX_0 = 2;
 int MUX_1 = 4;
 
-Display::Display(int a, int b, int c, int d, int e, int f, int g, int mux_0, int mux_1) {
-    pinMode(a, OUTPUT);
-    pinMode(b, OUTPUT);
-    pinMode(c, OUTPUT);
-    pinMode(d, OUTPUT);
-    pinMode(e, OUTPUT);
-    pinMode(f, OUTPUT);
-    pinMode(g, OUTPUT);
-
-    pinMode(mux_0, OUTPUT);
-    pinMode(mux_1, OUTPUT);
-
-    SEGMENTO_A = a;
-    SEGMENTO_B = b;
-    SEGMENTO_C = c;
-    SEGMENTO_D = d;
-    SEGMENTO_E = e;
-    SEGMENTO_F = f;
-    SEGMENTO_G = g;
-
-    MUX_0 = mux_0;
-    MUX_1 = mux_1;
-}
+int estado = STAND_BY;
+int numero = 0;
 
 // Numeros y animaciones
 int cero[7] = {1, 1, 1, 1, 1, 1, 0};
@@ -60,40 +39,52 @@ int* animacionCargando[6] = {cargandoFrame1, cargandoFrame2, cargandoFrame3, car
 int posicionAnimacionCargando = 0;
 int longitudAnimacionCargando = 0;
 
-// Parametros de la tarea a ejecutar en paralelo
-typedef struct Parametros {
-    Display* display;
-    int numero;
-} Parametros;
+Display::Display(int a, int b, int c, int d, int e, int f, int g, int mux_0, int mux_1) {
+    pinMode(a, OUTPUT);
+    pinMode(b, OUTPUT);
+    pinMode(c, OUTPUT);
+    pinMode(d, OUTPUT);
+    pinMode(e, OUTPUT);
+    pinMode(f, OUTPUT);
+    pinMode(g, OUTPUT);
 
-Parametros parametros;
+    pinMode(mux_0, OUTPUT);
+    pinMode(mux_1, OUTPUT);
 
-// Tarea a ejecutar en paralelo
-void mostrarIdComoNumero(void* parametrosTarea) {
-    Parametros* parametros = (Parametros*)parametrosTarea;
-    Display* display = parametros->display;
-    int numero = parametros->numero;
+    SEGMENTO_A = a;
+    SEGMENTO_B = b;
+    SEGMENTO_C = c;
+    SEGMENTO_D = d;
+    SEGMENTO_E = e;
+    SEGMENTO_F = f;
+    SEGMENTO_G = g;
 
-    while (true) {
-    // displayHelper->mostrarCargando();
-    // displayHelper->mostrarStandBy();
-        display->realizarTareaMostrarNumero(numero);
+    MUX_0 = mux_0;
+    MUX_1 = mux_1;
+}
+
+void Display::actualizar() {
+    switch (estado) {
+        case STAND_BY:
+            mostrarStandBy();
+            break;
+        
+        case CARGANDO:
+            mostrarCargando();
+            break;
+
+        case MOSTRANDO_NUMERO:
+            realizarTareaMostrarNumero(numero);
+            break;
     }
 }
 
-// Muestra numero entre 00 y 99
-void Display::mostrarNumero(int numero) {
-    parametros.display = this;
-    parametros.numero = numero;
+void Display::asignarNumero(int n) {
+    numero = n;
+}
 
-    if (seLlamoAlDisplay) {
-        vTaskDelete(tareaDisplay);
-    }
-
-    seLlamoAlDisplay = true;
-
-    xTaskCreatePinnedToCore(mostrarIdComoNumero, "mostrarIdComoNumero", 100000, &parametros,     
-                            1, &tareaDisplay, 1);
+void Display::asignarEstado(int e) {
+    estado = e;
 }
 
 // Loop de tarea ejecutada en paralelo

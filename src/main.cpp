@@ -28,10 +28,31 @@ TecladoCliente* tecladoCliente;
 MatrizLeds* matrizLeds;
 Tester* tester;
 
+// Parametros de la tarea a ejecutar en paralelo
+typedef struct Parametros {
+    Display* display;
+    int numero;
+} Parametros;
+
+Parametros parametros;
+TaskHandle_t tareaDisplay;
+
+// Tarea a ejecutar en paralelo
+void loopSegundoCore(void* p) {
+    while (true) {
+        display->actualizar();
+    }
+}
+
 void setup() {
     Serial.begin(115200);
-    display = new Display(SEGMENTO_A, SEGMENTO_B, SEGMENTO_C, SEGMENTO_D, SEGMENTO_E,
-                                        SEGMENTO_F, SEGMENTO_G, MUX_SEGMENTO_0, MUX_SEGMENTO_1);
+    display = new Display(SEGMENTO_A, SEGMENTO_B, SEGMENTO_C, SEGMENTO_D, SEGMENTO_E, SEGMENTO_F,
+                          SEGMENTO_G, MUX_SEGMENTO_0, MUX_SEGMENTO_1);
+    
+    parametros.display = display;
+    parametros.numero = 42;
+
+    xTaskCreatePinnedToCore(loopSegundoCore, "loopSegundoCore", 4096, NULL, 1, &tareaDisplay, 1);
     tecladoCliente = new TecladoCliente(PIN_SWITCH_1, PIN_SWITCH_2, PIN_SWITCH_3, PIN_SWITCH_4,
                                         display);
     matrizLeds = new MatrizLeds(CS_PIN_LEDMATRIX);
