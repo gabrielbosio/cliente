@@ -8,7 +8,7 @@ class Display {
         void mostrarNumero(int numero);
         void mostrarStandBy();
         void mostrarCargando();
-        void mostrar(int *numero, int mux);
+        void mostrar(int* numero, int mux);
         void realizarTareaMostrarNumero(int numero);
 
     private:

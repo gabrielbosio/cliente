@@ -6,10 +6,10 @@
 
 class AccionAsignarId: public AccionSwitch {
     public:
-        AccionAsignarId(TecladoCliente *tecladoCliente, int id);
+        AccionAsignarId(TecladoCliente* tecladoCliente, int id);
         void ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch);
     private:
-        TecladoCliente *tecladoCliente;
+        TecladoCliente* tecladoCliente;
         int id;
 };
 

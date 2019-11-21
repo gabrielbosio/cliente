@@ -62,16 +62,16 @@ int longitudAnimacionCargando = 0;
 
 // Parametros de la tarea a ejecutar en paralelo
 typedef struct Parametros {
-    Display *display;
+    Display* display;
     int numero;
 } Parametros;
 
 Parametros parametros;
 
 // Tarea a ejecutar en paralelo
-void mostrarIdComoNumero(void *parametrosTarea) {
-    Parametros *parametros = (Parametros*)parametrosTarea;
-    Display *display = parametros->display;
+void mostrarIdComoNumero(void* parametrosTarea) {
+    Parametros* parametros = (Parametros*)parametrosTarea;
+    Display* display = parametros->display;
     int numero = parametros->numero;
 
     while (true) {
@@ -132,7 +132,7 @@ void Display::mostrarCargando() {
 }
 
 // Muestra, multiplexando, un digito en el display
-void Display::mostrar(int *numero, int mux) {
+void Display::mostrar(int* numero, int mux) {
     digitalWrite(SEGMENTO_A, numero[0]);
     digitalWrite(SEGMENTO_B, numero[1]);
     digitalWrite(SEGMENTO_C, numero[2]);

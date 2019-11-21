@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "AccionMostrarId.h"
 
-AccionMostrarId::AccionMostrarId(int id, Display *display) :
+AccionMostrarId::AccionMostrarId(int id, Display* display) :
   id(id), display(display) {}
 
 void AccionMostrarId::ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch) {

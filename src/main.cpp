@@ -23,13 +23,13 @@
 #define CS_PIN_LEDMATRIX 5
 
 
-Display *display;
-TecladoCliente *tecladoCliente;
-MatrizLeds *matrizLeds;
+Display* display;
+TecladoCliente* tecladoCliente;
+MatrizLeds* matrizLeds;
 // TaskHandle_t DisplayTask;
 
 // Used to move display behaviour has paralel task into the secondary core
-// void display_id_number(void *pvParameters)
+// void display_id_number(void* pvParameters)
 // {
 //   for (;;)
 //   {

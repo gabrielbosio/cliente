@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "AccionTestear.h"
 
-AccionTestear::AccionTestear(TecladoCliente *tecladoCliente, Display *display) :
+AccionTestear::AccionTestear(TecladoCliente* tecladoCliente, Display* display) :
     tecladoCliente(tecladoCliente), display(display) {}
 
 void AccionTestear::ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch) {

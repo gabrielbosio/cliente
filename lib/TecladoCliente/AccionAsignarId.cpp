@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "AccionAsignarId.h"
 
-AccionAsignarId::AccionAsignarId(TecladoCliente *tecladoCliente, int id) :
+AccionAsignarId::AccionAsignarId(TecladoCliente* tecladoCliente, int id) :
     tecladoCliente(tecladoCliente), id(id) {}
 
 void AccionAsignarId::ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch) {

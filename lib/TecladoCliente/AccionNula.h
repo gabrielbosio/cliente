@@ -9,7 +9,7 @@ class AccionNula: public AccionSwitch {
         AccionNula();
         void ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch);
     private:
-        TecladoCliente *tecladoCliente;
+        TecladoCliente* tecladoCliente;
 };
 
 #endif
