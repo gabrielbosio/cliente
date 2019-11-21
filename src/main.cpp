@@ -17,7 +17,7 @@
 #define SEGMENTO_E 26
 #define SEGMENTO_F 25
 #define SEGMENTO_G 33
-#define MUX_SEGMENTO_0 15
+#define MUX_SEGMENTO_0 4
 #define MUX_SEGMENTO_1 32
 // Matriz de leds
 #define CS_PIN_LEDMATRIX 5
