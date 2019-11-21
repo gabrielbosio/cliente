@@ -2,44 +2,10 @@
 
 #include "Display.h"
 
-int SEGMENTO_A = 18;
-int SEGMENTO_B = 19;
-int SEGMENTO_C = 21;
-int SEGMENTO_D = 16;
-int SEGMENTO_E = 17;
-int SEGMENTO_F = 22;
-int SEGMENTO_G = 23;
+Display::Display(int a, int b, int c, int d, int e, int f, int g, int mux0, int mux1) :
+    segmentoA(a), segmentoB(b), segmentoC(c), segmentoD(d), segmentoE(e), segmentoF(f),
+    segmentoG(g), mux0(mux0), mux1(mux1) {
 
-int MUX_0 = 2;
-int MUX_1 = 4;
-
-int estado = STAND_BY;
-int numero = 0;
-
-// Numeros y animaciones
-int cero[7] = {1, 1, 1, 1, 1, 1, 0};
-int uno[7] = {0, 1, 1, 0, 0, 0, 0};
-int dos[7] = {1, 1, 0, 1, 1, 0, 1};
-int tres[7] = {1, 1, 1, 1, 0, 0, 1};
-int cuatro[7] = {0, 1, 1, 0, 0, 1, 1};
-int cinco[7] = {1, 0, 1, 1, 0, 1, 1};
-int seis[7] = {1, 0, 1, 1, 1, 1, 1};
-int siete[7] = {1, 1, 1, 0, 0, 0, 0};
-int ocho[7] = {1, 1, 1, 1, 1, 1, 1};
-int nueve[7] = {1, 1, 1, 0, 0, 1, 1};
-int* numeros[10] = {cero, uno, dos, tres, cuatro, cinco, seis, siete, ocho, nueve};
-int standBy[7] = {0, 0, 0, 0, 0, 0, 1};
-int cargandoFrame1[7] = {1, 1, 0, 0, 0, 0, 0};
-int cargandoFrame2[7] = {0, 1, 1, 0, 0, 0, 0};
-int cargandoFrame3[7] = {0, 0, 1, 1, 0, 0, 0};
-int cargandoFrame4[7] = {0, 0, 0, 1, 1, 0, 0};
-int cargandoFrame5[7] = {0, 0, 0, 0, 1, 1, 0};
-int cargandoFrame6[7] = {1, 0, 0, 0, 0, 1, 0};
-int* animacionCargando[6] = {cargandoFrame1, cargandoFrame2, cargandoFrame3, cargandoFrame4, cargandoFrame5, cargandoFrame6};
-int posicionAnimacionCargando = 0;
-int longitudAnimacionCargando = 0;
-
-Display::Display(int a, int b, int c, int d, int e, int f, int g, int mux_0, int mux_1) {
     pinMode(a, OUTPUT);
     pinMode(b, OUTPUT);
     pinMode(c, OUTPUT);
@@ -48,19 +14,8 @@ Display::Display(int a, int b, int c, int d, int e, int f, int g, int mux_0, int
     pinMode(f, OUTPUT);
     pinMode(g, OUTPUT);
 
-    pinMode(mux_0, OUTPUT);
-    pinMode(mux_1, OUTPUT);
-
-    SEGMENTO_A = a;
-    SEGMENTO_B = b;
-    SEGMENTO_C = c;
-    SEGMENTO_D = d;
-    SEGMENTO_E = e;
-    SEGMENTO_F = f;
-    SEGMENTO_G = g;
-
-    MUX_0 = mux_0;
-    MUX_1 = mux_1;
+    pinMode(mux0, OUTPUT);
+    pinMode(mux1, OUTPUT);
 }
 
 void Display::actualizar() {
@@ -124,19 +79,19 @@ void Display::mostrarCargando() {
 
 // Muestra, multiplexando, un digito en el display
 void Display::mostrar(int* numero, int mux) {
-    digitalWrite(SEGMENTO_A, numero[0]);
-    digitalWrite(SEGMENTO_B, numero[1]);
-    digitalWrite(SEGMENTO_C, numero[2]);
-    digitalWrite(SEGMENTO_D, numero[3]);
-    digitalWrite(SEGMENTO_E, numero[4]);
-    digitalWrite(SEGMENTO_F, numero[5]);
-    digitalWrite(SEGMENTO_G, numero[6]);
+    digitalWrite(segmentoA, numero[0]);
+    digitalWrite(segmentoB, numero[1]);
+    digitalWrite(segmentoC, numero[2]);
+    digitalWrite(segmentoD, numero[3]);
+    digitalWrite(segmentoE, numero[4]);
+    digitalWrite(segmentoF, numero[5]);
+    digitalWrite(segmentoG, numero[6]);
     
     if (mux == 0) {
-        digitalWrite(MUX_0, 1);
-        digitalWrite(MUX_1, 0);
+        digitalWrite(mux0, 1);
+        digitalWrite(mux1, 0);
     } else if (mux == 1) {
-        digitalWrite(MUX_0, 0);
-        digitalWrite(MUX_1, 1);
+        digitalWrite(mux0, 0);
+        digitalWrite(mux1, 1);
     }
 }
