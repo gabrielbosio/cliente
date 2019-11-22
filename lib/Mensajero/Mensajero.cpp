@@ -2,17 +2,10 @@
 #include <WiFi.h>
 
 Mensajero::Mensajero(int id, Display* display) : _id(id), display(display) {
+    servidor = new AsyncWebServer(80);
     Serial.begin(115200);
-    WiFi.begin("ESP32", "12345678");
-    int intentos = 10;
-
-    while (WiFi.status() != WL_CONNECTED && intentos > 0) {
-        Serial.println("Conectando a servidor...");
-        intentos--;
-        delay(500);
-    }
-
-    Serial.println(intentos > 0 ? "Conectado" : "No se pudo conectar");
+    inicializarServidor();
+    intentarConectarseAServidor();
     notificarRegistro();
 }
 
@@ -32,7 +25,30 @@ void Mensajero::notificarPedidoMozo() {
     cliente.end();
     Serial.print("Codigo de respuesta: ");
     Serial.println(codigoRespuesta);
-    display->asignarEstado(STAND_BY);
+}
+
+void Mensajero::inicializarServidor() {
+    servidor->on("/ping", HTTP_GET, [](AsyncWebServerRequest* request){
+        request->send(200, "text/plain", "pong");
+    });
+
+    servidor->on("/notificar_recepcion_solicitud_mozo", HTTP_GET, [=](AsyncWebServerRequest* request){
+        display->asignarEstado(STAND_BY);
+        request->send(200, "text/plain", "Notificacion recibida");
+    });
+}
+
+void Mensajero::intentarConectarseAServidor() {
+    WiFi.begin("ESP32", "12345678");
+    int intentos = 10;
+
+    while (WiFi.status() != WL_CONNECTED && intentos > 0) {
+        Serial.println("Conectando a servidor...");
+        intentos--;
+        delay(500);
+    }
+
+    Serial.println(intentos > 0 ? "Conectado" : "No se pudo conectar");
 }
 
 void Mensajero::notificarRegistro() {
