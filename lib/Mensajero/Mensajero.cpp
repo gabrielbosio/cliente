@@ -68,6 +68,8 @@ void Mensajero::inicializarServidor() {
         }
         request->send(400, "text/plain", "Error de parametros");
     });
+
+    servidor->begin();
 }
 
 void Mensajero::intentarConectarseAServidor() {
