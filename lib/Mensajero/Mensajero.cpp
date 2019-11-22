@@ -4,8 +4,8 @@
 Mensajero::Mensajero(int id, Display* display) : _id(id), display(display) {
     servidor = new AsyncWebServer(80);
     Serial.begin(115200);
-    inicializarServidor();
     intentarConectarseAServidor();
+    inicializarServidor();
     notificarRegistro();
 }
 
