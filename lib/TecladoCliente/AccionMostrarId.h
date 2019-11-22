@@ -2,15 +2,16 @@
 #define ACCION_MOSTRAR_ID_H
 
 #include "Display.h"
+#include "Mensajero.h"
 #include "AccionSwitch.h"
 
 class AccionMostrarId: public AccionSwitch {
     public:
-        AccionMostrarId(int id, Display* display);
+        AccionMostrarId(Display* display, Mensajero* mensajero);
         void ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch);
     private:
-        int id;
         Display* display;
+        Mensajero* mensajero;
 };
 
 #endif

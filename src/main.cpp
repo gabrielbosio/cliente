@@ -1,5 +1,6 @@
 #include "Display.h"
 #include "MatrizLeds.h"
+#include "Mensajero.h"
 #include "TecladoCliente.h"
 #include "Tester.h"
 #include <Arduino.h>
@@ -24,6 +25,7 @@
 #define CS_PIN_LEDMATRIX 5
 
 Display* display;
+Mensajero* mensajero;
 TecladoCliente* tecladoCliente;
 MatrizLeds* matrizLeds;
 Tester* tester;
@@ -38,12 +40,14 @@ void loopSegundoCore(void* p) {
 
 void setup() {
     Serial.begin(115200);
+    
     display = new Display(SEGMENTO_A, SEGMENTO_B, SEGMENTO_C, SEGMENTO_D, SEGMENTO_E, SEGMENTO_F,
                           SEGMENTO_G, MUX_SEGMENTO_0, MUX_SEGMENTO_1);
-
     xTaskCreatePinnedToCore(loopSegundoCore, "loopSegundoCore", 4096, NULL, 1, &tareaDisplay, 1);
+    
+    mensajero = new Mensajero(0, display);
     tecladoCliente = new TecladoCliente(PIN_SWITCH_1, PIN_SWITCH_2, PIN_SWITCH_3, PIN_SWITCH_4,
-                                        display);
+                                        display, mensajero);
     matrizLeds = new MatrizLeds(CS_PIN_LEDMATRIX);
     tester = new Tester(display, matrizLeds);
 }

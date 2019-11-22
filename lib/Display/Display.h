@@ -12,11 +12,6 @@ class Display {
         void actualizar();
         void asignarNumero(int numero);
         void asignarEstado(int estado);
-        void mostrarStandBy();
-        void mostrarCargando();
-        void mostrar(int* numero, int mux);
-        void realizarTareaMostrarNumero(int numero);
-
     private:
         // Para no borrar la tarea la primera vez, porque no hay tarea en ese caso
         bool seLlamoAlDisplay = false;
@@ -55,6 +50,11 @@ class Display {
         int* animacionCargando[6] = {cargandoFrame1, cargandoFrame2, cargandoFrame3, cargandoFrame4, cargandoFrame5, cargandoFrame6};
         int posicionAnimacionCargando = 0;
         int longitudAnimacionCargando = 0;
+
+        void mostrarStandBy();
+        void mostrarCargando();
+        void realizarTareaMostrarNumero(int numero);
+        void mostrar(int* numero, int mux);
 };
 
 #endif

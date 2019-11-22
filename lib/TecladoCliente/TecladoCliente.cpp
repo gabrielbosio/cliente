@@ -11,9 +11,9 @@
 #include "AccionTestear.h"
 
 TecladoCliente::TecladoCliente(int pinSwitch1, int pinSwitch2, int pinSwitch3, int pinSwitch4,
-                               Display* display) :
-    display(display), pinSwitch1(pinSwitch1), pinSwitch2(pinSwitch2), pinSwitch3(pinSwitch3),
-    pinSwitch4(pinSwitch4) {
+                               Display* display, Mensajero* mensajero) :
+    display(display), mensajero(mensajero), pinSwitch1(pinSwitch1), pinSwitch2(pinSwitch2),
+    pinSwitch3(pinSwitch3), pinSwitch4(pinSwitch4) {
 
     pinMode(pinSwitch1, INPUT);
     pinMode(pinSwitch2, INPUT);
@@ -56,22 +56,18 @@ bool TecladoCliente::actualizar() {
     return comienzaTest;
 }
 
-void TecladoCliente::asignarId(int id) {
-    this->id = id;
-}
-
 void TecladoCliente::configurarSwitch1(int configSwitch) {
     delete accionSwitch1;
 
     switch (configSwitch) {
         case NORMAL:
-            accionSwitch1 = new AccionLlamarMozo();
+            accionSwitch1 = new AccionLlamarMozo(mensajero);
             break;
         case CONFIG:
-            accionSwitch1 = new AccionMostrarId(id, display);
+            accionSwitch1 = new AccionMostrarId(display, mensajero);
             break;
         case ID:
-            accionSwitch1 = new AccionAsignarId(this, 1);
+            accionSwitch1 = new AccionAsignarId(this, mensajero, 1);
             break;
         case NADA:
             accionSwitch1 = new AccionNula();
@@ -90,7 +86,7 @@ void TecladoCliente::configurarSwitch2(int configSwitch) {
             accionSwitch2 = new AccionConfigId(this);
             break;
         case ID:
-            accionSwitch2 = new AccionAsignarId(this, 2);
+            accionSwitch2 = new AccionAsignarId(this, mensajero, 2);
             break;
         case NADA:
             accionSwitch2 = new AccionNula();
@@ -109,7 +105,7 @@ void TecladoCliente::configurarSwitch3(int configSwitch) {
             accionSwitch3 = new AccionTestear(this, &comienzaTest);
             break;
         case ID:
-            accionSwitch3 = new AccionAsignarId(this, 3);
+            accionSwitch3 = new AccionAsignarId(this, mensajero, 3);
             break;
         case NADA:
             accionSwitch3 = new AccionNula();
@@ -125,15 +121,10 @@ void TecladoCliente::configurarSwitch4(int configSwitch) {
             accionSwitch4 = new AccionConfig(this);
             break;
         case ID:
-            accionSwitch4 = new AccionAsignarId(this, 4);
+            accionSwitch4 = new AccionAsignarId(this, mensajero, 4);
             break;
         case NADA:
             accionSwitch4 = new AccionNula();
             break;
     }
-}
-
-int TecladoCliente::get_id()
-{
-    return id;
 }
