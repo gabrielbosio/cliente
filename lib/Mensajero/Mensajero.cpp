@@ -18,7 +18,7 @@ int Mensajero::id() {
 }
 
 void Mensajero::notificarPedidoMozo() {
-    String ruta = "192.168.1.2/pedir_mozo?cliente=" + String(_id);
+    String ruta = "http://192.168.1.2/pedir_mozo?cliente=" + String(_id);
     cliente.begin(ruta);
     display->asignarEstado(CARGANDO);
     int codigoRespuesta = cliente.GET();
@@ -31,7 +31,7 @@ void Mensajero::notificarPedidoMozo() {
 }
 
 void Mensajero::notificarConsultaEspera() {
-    String ruta = "192.168.1.2/preguntar_espera?cliente=" + String(_id);
+    String ruta = "http://192.168.1.2/preguntar_espera?cliente=" + String(_id);
     cliente.begin(ruta);
     display->asignarEstado(CARGANDO);
     int codigoRespuesta = cliente.GET();
@@ -87,7 +87,7 @@ void Mensajero::intentarConectarseAServidor() {
 
 void Mensajero::notificarRegistro() {
     String ip = WiFi.localIP().toString();
-    String ruta = "192.168.1.2/registrarse?id=" + String(_id) + "&ip=" + ip;
+    String ruta = "http://192.168.1.2/registrarse?id=" + String(_id) + "&ip=" + ip;
     Serial.print("Enviando ");
     Serial.println(ruta);
     cliente.begin(ruta);
