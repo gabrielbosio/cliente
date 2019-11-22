@@ -12,6 +12,7 @@ class Mensajero {
         int id();
         void notificarPedidoMozo();
         void notificarAck();
+        void notificarConsultaEspera();
     private:
         int _id;
         Display* display;
@@ -20,6 +21,7 @@ class Mensajero {
         void inicializarServidor();
         void intentarConectarseAServidor();
         void notificarRegistro();
+        bool esNumero(String parametro);
 };
 
 #endif

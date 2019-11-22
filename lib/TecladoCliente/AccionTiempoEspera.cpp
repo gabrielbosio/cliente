@@ -1,10 +1,10 @@
 #include <Arduino.h>
 #include "AccionTiempoEspera.h"
 
-AccionTiempoEspera::AccionTiempoEspera(Display* display) : display(display) {}
+AccionTiempoEspera::AccionTiempoEspera(Mensajero* mensajero) : mensajero(mensajero) {}
 
 void AccionTiempoEspera::ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch) {
     if (estadoActualPinSwitch == HIGH && estadoAnteriorPinSwitch == LOW) {
-        display->asignarEstado(CARGANDO);
+        mensajero->notificarConsultaEspera();
     }
 }

@@ -25,6 +25,22 @@ void Mensajero::notificarPedidoMozo() {
     cliente.end();
     Serial.print("Codigo de respuesta: ");
     Serial.println(codigoRespuesta);
+    if (codigoRespuesta < 0 || codigoRespuesta >= 400) {
+        display->asignarEstado(STAND_BY);
+    }
+}
+
+void Mensajero::notificarConsultaEspera() {
+    String ruta = "192.168.1.2/preguntar_espera?cliente=" + String(_id);
+    cliente.begin(ruta);
+    display->asignarEstado(CARGANDO);
+    int codigoRespuesta = cliente.GET();
+    cliente.end();
+    Serial.print("Codigo de respuesta: ");
+    Serial.println(codigoRespuesta);
+    if (codigoRespuesta < 0 || codigoRespuesta >= 400) {
+        display->asignarEstado(STAND_BY);
+    }
 }
 
 void Mensajero::inicializarServidor() {
@@ -35,6 +51,22 @@ void Mensajero::inicializarServidor() {
     servidor->on("/notificar_recepcion_solicitud_mozo", HTTP_GET, [=](AsyncWebServerRequest* request){
         display->asignarEstado(STAND_BY);
         request->send(200, "text/plain", "Notificacion recibida");
+    });
+
+    servidor->on("/notificar_espera", HTTP_GET, [=](AsyncWebServerRequest* request){
+        AsyncWebParameter* parametroMinutos = request->getParam(0);
+
+        if (parametroMinutos != NULL && parametroMinutos->name() == "minutos" &&
+            esNumero(parametroMinutos->value())) {
+
+            int minutos = parametroMinutos->value().toInt();
+            if (minutos >= 0 && minutos <= 99) {
+                display->asignarNumero(minutos);
+                display->asignarEstado(MOSTRANDO_NUMERO);
+                request->send(200, "text/plain", "Notificacion recibida");
+            }
+        }
+        request->send(400, "text/plain", "Error de parametros");
     });
 }
 
@@ -61,4 +93,16 @@ void Mensajero::notificarRegistro() {
     cliente.end();
     Serial.print("Codigo de respuesta: ");
     Serial.println(codigoRespuesta);
+}
+
+bool Mensajero::esNumero(String parametro) {
+    for (int i = 0; i < parametro.length(); i++) {
+        char caracter = parametro.charAt(i);
+        
+        if (!isDigit(caracter)) {
+            return false;
+        }
+    }
+
+    return true;
 }

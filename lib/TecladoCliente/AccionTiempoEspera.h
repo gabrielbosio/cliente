@@ -2,14 +2,14 @@
 #define ACCION_TIEMPO_ESPERA_H
 
 #include "AccionSwitch.h"
-#include "Display.h"
+#include "Mensajero.h"
 
 class AccionTiempoEspera: public AccionSwitch {
     public:
-        AccionTiempoEspera(Display* display);
+        AccionTiempoEspera(Mensajero* mensajero);
         void ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch);
     private:
-        Display* display;
+        Mensajero* mensajero;
 };
 
 #endif
