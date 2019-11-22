@@ -30,6 +30,15 @@ void Mensajero::notificarPedidoMozo() {
     }
 }
 
+void Mensajero::notificarAck() {
+    String ruta = "http://192.168.1.2/confirmar_recepcion_mesa_lista?cliente=" + String(_id);
+    cliente.begin(ruta);
+    int codigoRespuesta = cliente.GET();
+    cliente.end();
+    Serial.print("Codigo de respuesta: ");
+    Serial.println(codigoRespuesta);
+}
+
 void Mensajero::notificarConsultaEspera() {
     String ruta = "http://192.168.1.2/preguntar_espera?cliente=" + String(_id);
     cliente.begin(ruta);
@@ -67,6 +76,11 @@ void Mensajero::inicializarServidor() {
             }
         }
         request->send(400, "text/plain", "Error de parametros");
+    });
+
+    servidor->on("/notificar_mesa_lista", HTTP_GET, [=](AsyncWebServerRequest* request){
+        Serial.println("La mesa esta lista!!!");
+        request->send(200, "text/plain", "Notificacion recibida");
     });
 
     servidor->begin();

@@ -80,7 +80,7 @@ void TecladoCliente::configurarSwitch2(int configSwitch) {
 
     switch (configSwitch) {
         case NORMAL:
-            accionSwitch2 = new AccionAck();
+            accionSwitch2 = new AccionAck(mensajero);
             break;
         case CONFIG:
             accionSwitch2 = new AccionConfigId(this);
