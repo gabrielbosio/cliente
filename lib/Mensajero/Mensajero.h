@@ -1,6 +1,7 @@
 #ifndef MENSAJERO_H
 #define MENSAJERO_H
 
+#include "ControladorAlertas.h"
 #include "Display.h"
 #include "MatrizLeds.h"
 #include <HTTPClient.h>
@@ -8,7 +9,8 @@
 
 class Mensajero {
     public:
-        Mensajero(int id, Display* display, MatrizLeds* matrizLeds);
+        Mensajero(int id, ControladorAlertas* controladorAlertas, Display* display,
+                  MatrizLeds* matrizLeds);
         void asignarId(int id);
         int id();
         void notificarPedidoMozo();
@@ -16,6 +18,7 @@ class Mensajero {
         void notificarConsultaEspera();
     private:
         int _id;
+        ControladorAlertas* controladorAlertas;
         Display* display;
         MatrizLeds* matrizLeds;
         HTTPClient cliente;

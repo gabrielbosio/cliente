@@ -1,8 +1,9 @@
 #include "Mensajero.h"
 #include <WiFi.h>
 
-Mensajero::Mensajero(int id, Display* display, MatrizLeds* matrizLeds) :
-    _id(id), display(display), matrizLeds(matrizLeds) {
+Mensajero::Mensajero(int id, ControladorAlertas* controladorAlertas, Display* display,
+                     MatrizLeds* matrizLeds) :
+    _id(id), controladorAlertas(controladorAlertas), display(display), matrizLeds(matrizLeds) {
 
     servidor = new AsyncWebServer(80);
     Serial.begin(115200);
@@ -82,6 +83,7 @@ void Mensajero::inicializarServidor() {
 
     servidor->on("/notificar_mesa_lista", HTTP_GET, [=](AsyncWebServerRequest* request){
         matrizLeds->encender();
+        controladorAlertas->encender();
         request->send(200, "text/plain", "Notificacion recibida");
     });
 

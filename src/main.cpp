@@ -1,3 +1,4 @@
+#include "ControladorAlertas.h"
 #include "Display.h"
 #include "MatrizLeds.h"
 #include "Mensajero.h"
@@ -24,6 +25,7 @@
 // Matriz de leds
 #define CS_PIN_LEDMATRIX 5
 
+ControladorAlertas* controladorAlertas;
 Display* display;
 Mensajero* mensajero;
 TecladoCliente* tecladoCliente;
@@ -45,10 +47,11 @@ void setup() {
                           SEGMENTO_G, MUX_SEGMENTO_0, MUX_SEGMENTO_1);
     xTaskCreatePinnedToCore(loopSegundoCore, "loopSegundoCore", 4096, NULL, 1, &tareaDisplay, 1);
     
+    controladorAlertas = new ControladorAlertas();
     matrizLeds = new MatrizLeds(CS_PIN_LEDMATRIX);
-    mensajero = new Mensajero(0, display, matrizLeds);
+    mensajero = new Mensajero(0, controladorAlertas, display, matrizLeds);
     tecladoCliente = new TecladoCliente(PIN_SWITCH_1, PIN_SWITCH_2, PIN_SWITCH_3, PIN_SWITCH_4,
-                                        display, matrizLeds, mensajero);
+                                        controladorAlertas, display, matrizLeds, mensajero);
     tester = new Tester(display, matrizLeds);
 }
 
