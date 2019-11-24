@@ -2,6 +2,7 @@
 #define TECLADO_CLIENTE_H
 
 #include "Display.h"
+#include "MatrizLeds.h"
 #include "Mensajero.h"
 #include "AccionSwitch.h"
 
@@ -13,12 +14,13 @@
 class TecladoCliente {
     public:
         TecladoCliente(int pinSwitch1, int pinSwitch2, int pinSwitch3, int pinSwitch4,
-                    Display* display, Mensajero* mensajero);
+                    Display* display, MatrizLeds* matrizLeds, Mensajero* mensajero);
         void reiniciar();
         void configurar(int configwitch1, int configwitch2, int configwitch3, int configwitch4);
         bool actualizar();
     private:
         Display* display;
+        MatrizLeds* matrizLeds;
         Mensajero* mensajero;
         bool comienzaTest = false;
         int id = 0;

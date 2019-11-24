@@ -1,7 +1,9 @@
 #include "Mensajero.h"
 #include <WiFi.h>
 
-Mensajero::Mensajero(int id, Display* display) : _id(id), display(display) {
+Mensajero::Mensajero(int id, Display* display, MatrizLeds* matrizLeds) :
+    _id(id), display(display), matrizLeds(matrizLeds) {
+
     servidor = new AsyncWebServer(80);
     Serial.begin(115200);
     intentarConectarseAServidor();
@@ -79,7 +81,7 @@ void Mensajero::inicializarServidor() {
     });
 
     servidor->on("/notificar_mesa_lista", HTTP_GET, [=](AsyncWebServerRequest* request){
-        Serial.println("La mesa esta lista!!!");
+        matrizLeds->encender();
         request->send(200, "text/plain", "Notificacion recibida");
     });
 

@@ -11,9 +11,10 @@
 #include "AccionTestear.h"
 
 TecladoCliente::TecladoCliente(int pinSwitch1, int pinSwitch2, int pinSwitch3, int pinSwitch4,
-                               Display* display, Mensajero* mensajero) :
-    display(display), mensajero(mensajero), pinSwitch1(pinSwitch1), pinSwitch2(pinSwitch2),
-    pinSwitch3(pinSwitch3), pinSwitch4(pinSwitch4) {
+                               Display* display, MatrizLeds* matrizLeds,
+                               Mensajero* mensajero) :
+    display(display), matrizLeds(matrizLeds), mensajero(mensajero), pinSwitch1(pinSwitch1),
+    pinSwitch2(pinSwitch2), pinSwitch3(pinSwitch3), pinSwitch4(pinSwitch4) {
 
     pinMode(pinSwitch1, INPUT);
     pinMode(pinSwitch2, INPUT);
@@ -80,7 +81,7 @@ void TecladoCliente::configurarSwitch2(int configSwitch) {
 
     switch (configSwitch) {
         case NORMAL:
-            accionSwitch2 = new AccionAck(mensajero);
+            accionSwitch2 = new AccionAck(mensajero, matrizLeds);
             break;
         case CONFIG:
             accionSwitch2 = new AccionConfigId(this);

@@ -45,10 +45,10 @@ void setup() {
                           SEGMENTO_G, MUX_SEGMENTO_0, MUX_SEGMENTO_1);
     xTaskCreatePinnedToCore(loopSegundoCore, "loopSegundoCore", 4096, NULL, 1, &tareaDisplay, 1);
     
-    mensajero = new Mensajero(0, display);
-    tecladoCliente = new TecladoCliente(PIN_SWITCH_1, PIN_SWITCH_2, PIN_SWITCH_3, PIN_SWITCH_4,
-                                        display, mensajero);
     matrizLeds = new MatrizLeds(CS_PIN_LEDMATRIX);
+    mensajero = new Mensajero(0, display, matrizLeds);
+    tecladoCliente = new TecladoCliente(PIN_SWITCH_1, PIN_SWITCH_2, PIN_SWITCH_3, PIN_SWITCH_4,
+                                        display, matrizLeds, mensajero);
     tester = new Tester(display, matrizLeds);
 }
 

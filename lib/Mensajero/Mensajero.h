@@ -2,12 +2,13 @@
 #define MENSAJERO_H
 
 #include "Display.h"
+#include "MatrizLeds.h"
 #include <HTTPClient.h>
 #include <ESPAsyncWebServer.h>
 
 class Mensajero {
     public:
-        Mensajero(int id, Display* display);
+        Mensajero(int id, Display* display, MatrizLeds* matrizLeds);
         void asignarId(int id);
         int id();
         void notificarPedidoMozo();
@@ -16,6 +17,7 @@ class Mensajero {
     private:
         int _id;
         Display* display;
+        MatrizLeds* matrizLeds;
         HTTPClient cliente;
         AsyncWebServer* servidor;
         void inicializarServidor();
