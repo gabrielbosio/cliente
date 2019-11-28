@@ -10,6 +10,7 @@ MatrizLeds::MatrizLeds(uint8_t csPin) : csPin(csPin) {
     this->enviarDatos(MAX7219_REG_DISPLAYTEST, 0);
     this->enviarDatos(MAX7219_REG_INTENSIDAD, 4);
     this->enviarDatos(MAX7219_REG_SHUTDOWN, 1);
+    this->apagar();
 }
 
 void MatrizLeds::enviarDatos(uint8_t registro, uint8_t datos) {

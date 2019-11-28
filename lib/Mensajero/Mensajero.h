@@ -9,15 +9,15 @@
 
 class Mensajero {
     public:
-        Mensajero(int id, ControladorAlertas* controladorAlertas, Display* display,
+        Mensajero(byte id, ControladorAlertas* controladorAlertas, Display* display,
                   MatrizLeds* matrizLeds);
-        void asignarId(int id);
-        int id();
+        void asignarId(byte id);
+        byte id();
         void notificarPedidoMozo();
         void notificarAck();
         void notificarConsultaEspera();
     private:
-        int _id;
+        byte _id;
         ControladorAlertas* controladorAlertas;
         Display* display;
         MatrizLeds* matrizLeds;

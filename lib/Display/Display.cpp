@@ -31,6 +31,9 @@ void Display::actualizar() {
         case MOSTRANDO_NUMERO:
             realizarTareaMostrarNumero(numero);
             break;
+        default:
+            Serial.println("Estado Display Erroneo");
+        break;
     }
 }
 

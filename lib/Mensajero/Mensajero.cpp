@@ -1,23 +1,26 @@
 #include "Mensajero.h"
 #include <WiFi.h>
 
-Mensajero::Mensajero(int id, ControladorAlertas* controladorAlertas, Display* display,
+Mensajero::Mensajero(byte id, ControladorAlertas* controladorAlertas, Display* display,
                      MatrizLeds* matrizLeds) :
     _id(id), controladorAlertas(controladorAlertas), display(display), matrizLeds(matrizLeds) {
 
     servidor = new AsyncWebServer(80);
     Serial.begin(115200);
     intentarConectarseAServidor();
-    inicializarServidor();
-    notificarRegistro();
+
+    if (WiFi.status() == WL_CONNECTED) {
+        inicializarServidor();
+        notificarRegistro();
+    }
 }
 
-void Mensajero::asignarId(int id) {
-    _id = id;
+void Mensajero::asignarId(byte id) {
+    this->_id = id;
 }
 
-int Mensajero::id() {
-    return _id;
+byte Mensajero::id() {
+    return this->_id;
 }
 
 void Mensajero::notificarPedidoMozo() {

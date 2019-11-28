@@ -3,6 +3,7 @@
 #include "MatrizLeds.h"
 #include "Mensajero.h"
 #include "TecladoCliente.h"
+#include "ManejadorFlash.h"
 #include "Tester.h"
 #include <Arduino.h>
 
@@ -32,6 +33,7 @@ TecladoCliente* tecladoCliente;
 MatrizLeds* matrizLeds;
 Tester* tester;
 TaskHandle_t tareaDisplay;
+ManejadorFlash* manejadorFlash;
 
 // Tarea a ejecutar en paralelo
 void loopSegundoCore(void* p) {
@@ -45,13 +47,19 @@ void setup() {
     
     display = new Display(SEGMENTO_A, SEGMENTO_B, SEGMENTO_C, SEGMENTO_D, SEGMENTO_E, SEGMENTO_F,
                           SEGMENTO_G, MUX_SEGMENTO_0, MUX_SEGMENTO_1);
-    xTaskCreatePinnedToCore(loopSegundoCore, "loopSegundoCore", 4096, NULL, 1, &tareaDisplay, 1);
+    xTaskCreatePinnedToCore(loopSegundoCore, "loopSegundoCore", 8192, NULL, 1, &tareaDisplay, 1);
     
     controladorAlertas = new ControladorAlertas();
     matrizLeds = new MatrizLeds(CS_PIN_LEDMATRIX);
-    mensajero = new Mensajero(0, controladorAlertas, display, matrizLeds);
+    manejadorFlash = new ManejadorFlash();
+    byte id = manejadorFlash->leerID();
+    Serial.print("ID Cliente: ");
+    Serial.println(id);
+    delay(1000);
+    mensajero = new Mensajero(id, controladorAlertas, display, matrizLeds);
+    Serial.println("mensajero creado");
     tecladoCliente = new TecladoCliente(PIN_SWITCH_1, PIN_SWITCH_2, PIN_SWITCH_3, PIN_SWITCH_4,
-                                        controladorAlertas, display, matrizLeds, mensajero);
+                                        controladorAlertas, display, matrizLeds, mensajero, manejadorFlash);
     tester = new Tester(display, matrizLeds);
 }
 

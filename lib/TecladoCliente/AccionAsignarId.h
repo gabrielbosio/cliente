@@ -2,17 +2,19 @@
 #define ACCION_ASIGNAR_ID_H
 
 #include "AccionSwitch.h"
-#include "Mensajero.h"
 #include "TecladoCliente.h"
+#include "Mensajero.h"
+#include "ManejadorFlash.h"
 
 class AccionAsignarId: public AccionSwitch {
     public:
-        AccionAsignarId(TecladoCliente* tecladoCliente, Mensajero* mensajero, int id);
+        AccionAsignarId(TecladoCliente* tecladoCliente, ManejadorFlash* manejadorFlash, Mensajero* mensajero, byte id);
         void ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch);
     private:
         TecladoCliente* tecladoCliente;
+        ManejadorFlash* manejadorFlash;
         Mensajero* mensajero;
-        int id;
+        byte id;
 };
 
 #endif

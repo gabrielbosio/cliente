@@ -6,6 +6,7 @@
 #include "MatrizLeds.h"
 #include "Mensajero.h"
 #include "AccionSwitch.h"
+#include "ManejadorFlash.h"
 
 #define NADA 1
 #define NORMAL 2
@@ -16,7 +17,7 @@ class TecladoCliente {
     public:
         TecladoCliente(int pinSwitch1, int pinSwitch2, int pinSwitch3, int pinSwitch4,
                     ControladorAlertas* controladorAlertas, Display* display,
-                    MatrizLeds* matrizLeds, Mensajero* mensajero);
+                    MatrizLeds* matrizLeds, Mensajero* mensajero, ManejadorFlash* manejadorFlash);
         void reiniciar();
         void configurar(int configwitch1, int configwitch2, int configwitch3, int configwitch4);
         bool actualizar();
@@ -25,8 +26,9 @@ class TecladoCliente {
         Display* display;
         MatrizLeds* matrizLeds;
         Mensajero* mensajero;
+        ManejadorFlash* manejadorFlash;
         bool comienzaTest = false;
-        int id = 0;
+        byte id = 0;
 
         int pinSwitch1;
         int pinSwitch2;

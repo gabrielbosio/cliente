@@ -12,10 +12,10 @@
 
 TecladoCliente::TecladoCliente(int pinSwitch1, int pinSwitch2, int pinSwitch3, int pinSwitch4,
                                ControladorAlertas* controladorAlertas, Display* display,
-                               MatrizLeds* matrizLeds, Mensajero* mensajero) :
+                               MatrizLeds* matrizLeds, Mensajero* mensajero, ManejadorFlash* manejadorFlash) :
     controladorAlertas(controladorAlertas), display(display), matrizLeds(matrizLeds),
-    mensajero(mensajero), pinSwitch1(pinSwitch1), pinSwitch2(pinSwitch2),
-    pinSwitch3(pinSwitch3), pinSwitch4(pinSwitch4) {
+    mensajero(mensajero), manejadorFlash(manejadorFlash), pinSwitch1(pinSwitch1),
+    pinSwitch2(pinSwitch2), pinSwitch3(pinSwitch3), pinSwitch4(pinSwitch4){
 
     pinMode(pinSwitch1, INPUT);
     pinMode(pinSwitch2, INPUT);
@@ -63,17 +63,20 @@ void TecladoCliente::configurarSwitch1(int configSwitch) {
 
     switch (configSwitch) {
         case NORMAL:
-            accionSwitch1 = new AccionLlamarMozo(mensajero);
+            accionSwitch1 = new AccionLlamarMozo(this->mensajero);
             break;
         case CONFIG:
-            accionSwitch1 = new AccionMostrarId(display, mensajero);
+            accionSwitch1 = new AccionMostrarId(display, this->mensajero);
             break;
         case ID:
-            accionSwitch1 = new AccionAsignarId(this, mensajero, 1);
+            accionSwitch1 = new AccionAsignarId(this, this->manejadorFlash, this->mensajero, 1);
             break;
         case NADA:
             accionSwitch1 = new AccionNula();
             break;
+        default:
+            Serial.println("Estado Switch1 Erroneo");
+        break;
     }
 }
 
@@ -82,17 +85,20 @@ void TecladoCliente::configurarSwitch2(int configSwitch) {
 
     switch (configSwitch) {
         case NORMAL:
-            accionSwitch2 = new AccionAck(controladorAlertas, mensajero, matrizLeds);
+            accionSwitch2 = new AccionAck(controladorAlertas, this->mensajero, matrizLeds);
             break;
         case CONFIG:
             accionSwitch2 = new AccionConfigId(this);
             break;
         case ID:
-            accionSwitch2 = new AccionAsignarId(this, mensajero, 2);
+            accionSwitch2 = new AccionAsignarId(this, this->manejadorFlash, this->mensajero, 2);
             break;
         case NADA:
             accionSwitch2 = new AccionNula();
             break;
+        default:
+            Serial.println("Estado Switch2 Erroneo");
+        break;
     }
 }
 
@@ -101,17 +107,20 @@ void TecladoCliente::configurarSwitch3(int configSwitch) {
 
     switch (configSwitch) {
         case NORMAL:
-            accionSwitch3 = new AccionTiempoEspera(mensajero);
+            accionSwitch3 = new AccionTiempoEspera(this->mensajero);
             break;
         case CONFIG:
-            accionSwitch3 = new AccionTestear(this, &comienzaTest);
+            accionSwitch3 = new AccionTestear(this, this->manejadorFlash, this->mensajero, &comienzaTest);
             break;
         case ID:
-            accionSwitch3 = new AccionAsignarId(this, mensajero, 3);
+            accionSwitch3 = new AccionAsignarId(this, this->manejadorFlash, this->mensajero, 3);
             break;
         case NADA:
             accionSwitch3 = new AccionNula();
             break;
+        default:
+            Serial.println("Estado Switch3 Erroneo");
+        break;
     }
 }
 
@@ -123,10 +132,13 @@ void TecladoCliente::configurarSwitch4(int configSwitch) {
             accionSwitch4 = new AccionConfig(this);
             break;
         case ID:
-            accionSwitch4 = new AccionAsignarId(this, mensajero, 4);
+            accionSwitch4 = new AccionAsignarId(this, this->manejadorFlash, this->mensajero, 4);
             break;
         case NADA:
             accionSwitch4 = new AccionNula();
             break;
+        default:
+            Serial.println("Estado Switch4 Erroneo");
+        break;
     }
 }
