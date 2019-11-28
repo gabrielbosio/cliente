@@ -1,6 +1,7 @@
 #include "MatrizLeds.h"
 
-MatrizLeds::MatrizLeds(uint8_t csPin) : csPin(csPin) {
+MatrizLeds::MatrizLeds(uint8_t csPin) : csPin(csPin)
+{
     pinMode(csPin, OUTPUT);
     SPI.begin();
     SPI.setDataMode(SPI_MODE0);
@@ -13,21 +14,26 @@ MatrizLeds::MatrizLeds(uint8_t csPin) : csPin(csPin) {
     this->apagar();
 }
 
-void MatrizLeds::enviarDatos(uint8_t registro, uint8_t datos) {
+void MatrizLeds::enviarDatos(uint8_t registro, uint8_t datos)
+{
     digitalWrite(this->csPin, LOW);
     SPI.transfer(registro);
     SPI.transfer(datos);
     digitalWrite(this->csPin, HIGH);
 }
 
-void MatrizLeds::apagar() {
-    for (uint8_t reg = 1; reg < 9; reg++) {
+void MatrizLeds::apagar()
+{
+    for (uint8_t reg = 1; reg < 9; reg++)
+    {
         this->enviarDatos(reg, 0);
     }
 }
 
-void MatrizLeds::encender() {
-    for (uint8_t reg = 1; reg < 9; reg++) {
+void MatrizLeds::encender()
+{
+    for (uint8_t reg = 1; reg < 9; reg++)
+    {
         this->enviarDatos(reg, 255);
     }
 }

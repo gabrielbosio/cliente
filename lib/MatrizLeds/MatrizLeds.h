@@ -20,15 +20,16 @@
 #define MAX7219_REG_SHUTDOWN 0xC
 #define MAX7219_REG_DISPLAYTEST 0xF
 
-class MatrizLeds {
-    public:
-        MatrizLeds(uint8_t csPin);
-        void apagar();
-        void encender();
+class MatrizLeds
+{
+public:
+    MatrizLeds(uint8_t csPin);
+    void apagar();
+    void encender();
 
-    private:
-        void enviarDatos(uint8_t registro, uint8_t datos);
-        uint8_t csPin;
+private:
+    void enviarDatos(uint8_t registro, uint8_t datos);
+    uint8_t csPin;
 };
 
 #endif

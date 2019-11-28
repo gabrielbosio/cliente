@@ -4,12 +4,14 @@
 #include "AccionSwitch.h"
 #include "Mensajero.h"
 
-class AccionLlamarMozo: public AccionSwitch {
-    public:
-        AccionLlamarMozo(Mensajero* mensajero);
-        void ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch);
-    private:
-        Mensajero* mensajero;
+class AccionLlamarMozo : public AccionSwitch
+{
+public:
+    AccionLlamarMozo(Mensajero *mensajero);
+    void ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch);
+
+private:
+    Mensajero *mensajero;
 };
 
 #endif

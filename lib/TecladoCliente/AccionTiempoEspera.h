@@ -4,12 +4,14 @@
 #include "AccionSwitch.h"
 #include "Mensajero.h"
 
-class AccionTiempoEspera: public AccionSwitch {
-    public:
-        AccionTiempoEspera(Mensajero* mensajero);
-        void ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch);
-    private:
-        Mensajero* mensajero;
+class AccionTiempoEspera : public AccionSwitch
+{
+public:
+    AccionTiempoEspera(Mensajero *mensajero);
+    void ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch);
+
+private:
+    Mensajero *mensajero;
 };
 
 #endif

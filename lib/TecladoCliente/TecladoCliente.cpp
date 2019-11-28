@@ -11,11 +11,11 @@
 #include "AccionTestear.h"
 
 TecladoCliente::TecladoCliente(int pinSwitch1, int pinSwitch2, int pinSwitch3, int pinSwitch4,
-                               ControladorAlertas* controladorAlertas, Display* display,
-                               MatrizLeds* matrizLeds, Mensajero* mensajero, ManejadorFlash* manejadorFlash) :
-    controladorAlertas(controladorAlertas), display(display), matrizLeds(matrizLeds),
-    mensajero(mensajero), manejadorFlash(manejadorFlash), pinSwitch1(pinSwitch1),
-    pinSwitch2(pinSwitch2), pinSwitch3(pinSwitch3), pinSwitch4(pinSwitch4){
+                               ControladorAlertas *controladorAlertas, Display *display,
+                               MatrizLeds *matrizLeds, Mensajero *mensajero, ManejadorFlash *manejadorFlash) : controladorAlertas(controladorAlertas), display(display), matrizLeds(matrizLeds),
+                                                                                                               mensajero(mensajero), manejadorFlash(manejadorFlash), pinSwitch1(pinSwitch1),
+                                                                                                               pinSwitch2(pinSwitch2), pinSwitch3(pinSwitch3), pinSwitch4(pinSwitch4)
+{
 
     pinMode(pinSwitch1, INPUT);
     pinMode(pinSwitch2, INPUT);
@@ -25,13 +25,15 @@ TecladoCliente::TecladoCliente(int pinSwitch1, int pinSwitch2, int pinSwitch3, i
     reiniciar();
 }
 
-void TecladoCliente::reiniciar() {
+void TecladoCliente::reiniciar()
+{
     configurar(NORMAL, NORMAL, NORMAL, NORMAL);
     comienzaTest = false;
 }
 
 void TecladoCliente::configurar(int configSwitch1, int configSwitch2, int configSwitch3,
-                                int configSwitch4) {
+                                int configSwitch4)
+{
 
     configurarSwitch1(configSwitch1);
     configurarSwitch2(configSwitch2);
@@ -39,7 +41,8 @@ void TecladoCliente::configurar(int configSwitch1, int configSwitch2, int config
     configurarSwitch4(configSwitch4);
 }
 
-bool TecladoCliente::actualizar() {
+bool TecladoCliente::actualizar()
+{
     estadoActualPinSwitch1 = digitalRead(pinSwitch1);
     estadoActualPinSwitch2 = digitalRead(pinSwitch2);
     estadoActualPinSwitch3 = digitalRead(pinSwitch3);
@@ -49,7 +52,7 @@ bool TecladoCliente::actualizar() {
     accionSwitch2->ejecutar(estadoActualPinSwitch2, estadoAnteriorPinSwitch2);
     accionSwitch3->ejecutar(estadoActualPinSwitch3, estadoAnteriorPinSwitch3);
     accionSwitch4->ejecutar(estadoActualPinSwitch4, estadoAnteriorPinSwitch4);
-    
+
     estadoAnteriorPinSwitch1 = estadoActualPinSwitch1;
     estadoAnteriorPinSwitch2 = estadoActualPinSwitch2;
     estadoAnteriorPinSwitch3 = estadoActualPinSwitch3;
@@ -58,87 +61,95 @@ bool TecladoCliente::actualizar() {
     return comienzaTest;
 }
 
-void TecladoCliente::configurarSwitch1(int configSwitch) {
+void TecladoCliente::configurarSwitch1(int configSwitch)
+{
     delete accionSwitch1;
 
-    switch (configSwitch) {
-        case NORMAL:
-            accionSwitch1 = new AccionLlamarMozo(this->mensajero);
-            break;
-        case CONFIG:
-            accionSwitch1 = new AccionMostrarId(display, this->mensajero);
-            break;
-        case ID:
-            accionSwitch1 = new AccionAsignarId(this, this->manejadorFlash, this->mensajero, 1);
-            break;
-        case NADA:
-            accionSwitch1 = new AccionNula();
-            break;
-        default:
-            Serial.println("Estado Switch1 Erroneo");
+    switch (configSwitch)
+    {
+    case NORMAL:
+        accionSwitch1 = new AccionLlamarMozo(this->mensajero);
+        break;
+    case CONFIG:
+        accionSwitch1 = new AccionMostrarId(display, this->mensajero);
+        break;
+    case ID:
+        accionSwitch1 = new AccionAsignarId(this, this->manejadorFlash, this->mensajero, 1);
+        break;
+    case NADA:
+        accionSwitch1 = new AccionNula();
+        break;
+    default:
+        Serial.println("Estado Switch1 Erroneo");
         break;
     }
 }
 
-void TecladoCliente::configurarSwitch2(int configSwitch) {
+void TecladoCliente::configurarSwitch2(int configSwitch)
+{
     delete accionSwitch2;
 
-    switch (configSwitch) {
-        case NORMAL:
-            accionSwitch2 = new AccionAck(controladorAlertas, this->mensajero, matrizLeds);
-            break;
-        case CONFIG:
-            accionSwitch2 = new AccionConfigId(this);
-            break;
-        case ID:
-            accionSwitch2 = new AccionAsignarId(this, this->manejadorFlash, this->mensajero, 2);
-            break;
-        case NADA:
-            accionSwitch2 = new AccionNula();
-            break;
-        default:
-            Serial.println("Estado Switch2 Erroneo");
+    switch (configSwitch)
+    {
+    case NORMAL:
+        accionSwitch2 = new AccionAck(controladorAlertas, this->mensajero, matrizLeds);
+        break;
+    case CONFIG:
+        accionSwitch2 = new AccionConfigId(this);
+        break;
+    case ID:
+        accionSwitch2 = new AccionAsignarId(this, this->manejadorFlash, this->mensajero, 2);
+        break;
+    case NADA:
+        accionSwitch2 = new AccionNula();
+        break;
+    default:
+        Serial.println("Estado Switch2 Erroneo");
         break;
     }
 }
 
-void TecladoCliente::configurarSwitch3(int configSwitch) {
+void TecladoCliente::configurarSwitch3(int configSwitch)
+{
     delete accionSwitch3;
 
-    switch (configSwitch) {
-        case NORMAL:
-            accionSwitch3 = new AccionTiempoEspera(this->mensajero);
-            break;
-        case CONFIG:
-            accionSwitch3 = new AccionTestear(this, this->manejadorFlash, this->mensajero, &comienzaTest);
-            break;
-        case ID:
-            accionSwitch3 = new AccionAsignarId(this, this->manejadorFlash, this->mensajero, 3);
-            break;
-        case NADA:
-            accionSwitch3 = new AccionNula();
-            break;
-        default:
-            Serial.println("Estado Switch3 Erroneo");
+    switch (configSwitch)
+    {
+    case NORMAL:
+        accionSwitch3 = new AccionTiempoEspera(this->mensajero);
+        break;
+    case CONFIG:
+        accionSwitch3 = new AccionTestear(this, this->manejadorFlash, this->mensajero, &comienzaTest);
+        break;
+    case ID:
+        accionSwitch3 = new AccionAsignarId(this, this->manejadorFlash, this->mensajero, 3);
+        break;
+    case NADA:
+        accionSwitch3 = new AccionNula();
+        break;
+    default:
+        Serial.println("Estado Switch3 Erroneo");
         break;
     }
 }
 
-void TecladoCliente::configurarSwitch4(int configSwitch) {
+void TecladoCliente::configurarSwitch4(int configSwitch)
+{
     delete accionSwitch4;
 
-    switch (configSwitch) {
-        case NORMAL:
-            accionSwitch4 = new AccionConfig(this);
-            break;
-        case ID:
-            accionSwitch4 = new AccionAsignarId(this, this->manejadorFlash, this->mensajero, 4);
-            break;
-        case NADA:
-            accionSwitch4 = new AccionNula();
-            break;
-        default:
-            Serial.println("Estado Switch4 Erroneo");
+    switch (configSwitch)
+    {
+    case NORMAL:
+        accionSwitch4 = new AccionConfig(this);
+        break;
+    case ID:
+        accionSwitch4 = new AccionAsignarId(this, this->manejadorFlash, this->mensajero, 4);
+        break;
+    case NADA:
+        accionSwitch4 = new AccionNula();
+        break;
+    default:
+        Serial.println("Estado Switch4 Erroneo");
         break;
     }
 }

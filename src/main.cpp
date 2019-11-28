@@ -26,29 +26,32 @@
 // Matriz de leds
 #define CS_PIN_LEDMATRIX 5
 
-ControladorAlertas* controladorAlertas;
-Display* display;
-Mensajero* mensajero;
-TecladoCliente* tecladoCliente;
-MatrizLeds* matrizLeds;
-Tester* tester;
+ControladorAlertas *controladorAlertas;
+Display *display;
+Mensajero *mensajero;
+TecladoCliente *tecladoCliente;
+MatrizLeds *matrizLeds;
+Tester *tester;
 TaskHandle_t tareaDisplay;
-ManejadorFlash* manejadorFlash;
+ManejadorFlash *manejadorFlash;
 
 // Tarea a ejecutar en paralelo
-void loopSegundoCore(void* p) {
-    while (true) {
+void loopSegundoCore(void *p)
+{
+    while (true)
+    {
         display->actualizar();
     }
 }
 
-void setup() {
+void setup()
+{
     Serial.begin(115200);
-    
+
     display = new Display(SEGMENTO_A, SEGMENTO_B, SEGMENTO_C, SEGMENTO_D, SEGMENTO_E, SEGMENTO_F,
                           SEGMENTO_G, MUX_SEGMENTO_0, MUX_SEGMENTO_1);
     xTaskCreatePinnedToCore(loopSegundoCore, "loopSegundoCore", 8192, NULL, 1, &tareaDisplay, 1);
-    
+
     controladorAlertas = new ControladorAlertas();
     matrizLeds = new MatrizLeds(CS_PIN_LEDMATRIX);
     manejadorFlash = new ManejadorFlash();
@@ -62,10 +65,12 @@ void setup() {
     tester = new Tester(display, matrizLeds);
 }
 
-void loop() {
+void loop()
+{
     bool comienzaTest = tecladoCliente->actualizar();
 
-    if (comienzaTest) {
+    if (comienzaTest)
+    {
         tester->ejecutar();
         tecladoCliente->reiniciar();
     }

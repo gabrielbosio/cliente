@@ -13,47 +13,49 @@
 #define CONFIG 3
 #define ID 4
 
-class TecladoCliente {
-    public:
-        TecladoCliente(int pinSwitch1, int pinSwitch2, int pinSwitch3, int pinSwitch4,
-                    ControladorAlertas* controladorAlertas, Display* display,
-                    MatrizLeds* matrizLeds, Mensajero* mensajero, ManejadorFlash* manejadorFlash);
-        void reiniciar();
-        void configurar(int configwitch1, int configwitch2, int configwitch3, int configwitch4);
-        bool actualizar();
-    private:
-        ControladorAlertas* controladorAlertas;
-        Display* display;
-        MatrizLeds* matrizLeds;
-        Mensajero* mensajero;
-        ManejadorFlash* manejadorFlash;
-        bool comienzaTest = false;
-        byte id = 0;
+class TecladoCliente
+{
+public:
+    TecladoCliente(int pinSwitch1, int pinSwitch2, int pinSwitch3, int pinSwitch4,
+                   ControladorAlertas *controladorAlertas, Display *display,
+                   MatrizLeds *matrizLeds, Mensajero *mensajero, ManejadorFlash *manejadorFlash);
+    void reiniciar();
+    void configurar(int configwitch1, int configwitch2, int configwitch3, int configwitch4);
+    bool actualizar();
 
-        int pinSwitch1;
-        int pinSwitch2;
-        int pinSwitch3;
-        int pinSwitch4;
+private:
+    ControladorAlertas *controladorAlertas;
+    Display *display;
+    MatrizLeds *matrizLeds;
+    Mensajero *mensajero;
+    ManejadorFlash *manejadorFlash;
+    bool comienzaTest = false;
+    byte id = 0;
 
-        int estadoAnteriorPinSwitch1 = LOW;
-        int estadoAnteriorPinSwitch2 = LOW;
-        int estadoAnteriorPinSwitch3 = LOW;
-        int estadoAnteriorPinSwitch4 = LOW;
+    int pinSwitch1;
+    int pinSwitch2;
+    int pinSwitch3;
+    int pinSwitch4;
 
-        int estadoActualPinSwitch1 = LOW;
-        int estadoActualPinSwitch2 = LOW;
-        int estadoActualPinSwitch3 = LOW;
-        int estadoActualPinSwitch4 = LOW;
+    int estadoAnteriorPinSwitch1 = LOW;
+    int estadoAnteriorPinSwitch2 = LOW;
+    int estadoAnteriorPinSwitch3 = LOW;
+    int estadoAnteriorPinSwitch4 = LOW;
 
-        void configurarSwitch1(int config);
-        void configurarSwitch2(int config);
-        void configurarSwitch3(int config);
-        void configurarSwitch4(int config);
+    int estadoActualPinSwitch1 = LOW;
+    int estadoActualPinSwitch2 = LOW;
+    int estadoActualPinSwitch3 = LOW;
+    int estadoActualPinSwitch4 = LOW;
 
-        AccionSwitch* accionSwitch1 = NULL;
-        AccionSwitch* accionSwitch2 = NULL;
-        AccionSwitch* accionSwitch3 = NULL;
-        AccionSwitch* accionSwitch4 = NULL;
+    void configurarSwitch1(int config);
+    void configurarSwitch2(int config);
+    void configurarSwitch3(int config);
+    void configurarSwitch4(int config);
+
+    AccionSwitch *accionSwitch1 = NULL;
+    AccionSwitch *accionSwitch2 = NULL;
+    AccionSwitch *accionSwitch3 = NULL;
+    AccionSwitch *accionSwitch4 = NULL;
 };
 
 #endif

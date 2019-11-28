@@ -9,11 +9,12 @@
 #define FRECUENCIA_BUZZER_OFF 0
 #define FRECUENCIA_BUZZER_ON 2000
 
-class ControladorAlertas {
-    public:
-        ControladorAlertas();
-        void encender();
-        void apagar();
+class ControladorAlertas
+{
+public:
+    ControladorAlertas();
+    void encender();
+    void apagar();
 };
 
 #endif

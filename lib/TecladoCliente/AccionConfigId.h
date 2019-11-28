@@ -4,12 +4,14 @@
 #include "AccionSwitch.h"
 #include "TecladoCliente.h"
 
-class AccionConfigId: public AccionSwitch {
-    public:
-        AccionConfigId(TecladoCliente* tecladoCliente);
-        void ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch);
-    private:
-        TecladoCliente* tecladoCliente;
+class AccionConfigId : public AccionSwitch
+{
+public:
+    AccionConfigId(TecladoCliente *tecladoCliente);
+    void ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinSwitch);
+
+private:
+    TecladoCliente *tecladoCliente;
 };
 
 #endif

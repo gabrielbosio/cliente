@@ -1,9 +1,9 @@
 #include "Mensajero.h"
 #include <WiFi.h>
 
-Mensajero::Mensajero(byte id, ControladorAlertas* controladorAlertas, Display* display,
-                     MatrizLeds* matrizLeds) :
-    _id(id), controladorAlertas(controladorAlertas), display(display), matrizLeds(matrizLeds) {
+Mensajero::Mensajero(byte id, ControladorAlertas *controladorAlertas, Display *display,
+                     MatrizLeds *matrizLeds) : _id(id), controladorAlertas(controladorAlertas), display(display), matrizLeds(matrizLeds)
+{
 
     servidor = new AsyncWebServer(80);
     Serial.begin(115200);
@@ -12,15 +12,18 @@ Mensajero::Mensajero(byte id, ControladorAlertas* controladorAlertas, Display* d
     notificarRegistro();
 }
 
-void Mensajero::asignarId(byte id) {
+void Mensajero::asignarId(byte id)
+{
     this->_id = id;
 }
 
-byte Mensajero::id() {
+byte Mensajero::id()
+{
     return this->_id;
 }
 
-void Mensajero::notificarPedidoMozo() {
+void Mensajero::notificarPedidoMozo()
+{
     String ruta = "http://192.168.1.2/pedir_mozo?cliente=" + String(_id);
     cliente.begin(ruta);
     display->asignarEstado(CARGANDO);
@@ -28,12 +31,14 @@ void Mensajero::notificarPedidoMozo() {
     cliente.end();
     Serial.print("Codigo de respuesta: ");
     Serial.println(codigoRespuesta);
-    if (codigoRespuesta < 0 || codigoRespuesta >= 400) {
+    if (codigoRespuesta < 0 || codigoRespuesta >= 400)
+    {
         display->asignarEstado(STAND_BY);
     }
 }
 
-void Mensajero::notificarAck() {
+void Mensajero::notificarAck()
+{
     String ruta = "http://192.168.1.2/confirmar_recepcion_mesa_lista?cliente=" + String(_id);
     cliente.begin(ruta);
     int codigoRespuesta = cliente.GET();
@@ -42,7 +47,8 @@ void Mensajero::notificarAck() {
     Serial.println(codigoRespuesta);
 }
 
-void Mensajero::notificarConsultaEspera() {
+void Mensajero::notificarConsultaEspera()
+{
     String ruta = "http://192.168.1.2/preguntar_espera?cliente=" + String(_id);
     cliente.begin(ruta);
     display->asignarEstado(CARGANDO);
@@ -50,31 +56,36 @@ void Mensajero::notificarConsultaEspera() {
     cliente.end();
     Serial.print("Codigo de respuesta: ");
     Serial.println(codigoRespuesta);
-    if (codigoRespuesta < 0 || codigoRespuesta >= 400) {
+    if (codigoRespuesta < 0 || codigoRespuesta >= 400)
+    {
         display->asignarEstado(STAND_BY);
     }
 }
 
-void Mensajero::inicializarServidor() {
-    
-    if (WiFi.status() == WL_CONNECTED) {
-        servidor->on("/ping", HTTP_GET, [](AsyncWebServerRequest* request){
+void Mensajero::inicializarServidor()
+{
+
+    if (WiFi.status() == WL_CONNECTED)
+    {
+        servidor->on("/ping", HTTP_GET, [](AsyncWebServerRequest *request) {
             request->send(200, "text/plain", "pong");
         });
 
-        servidor->on("/notificar_recepcion_solicitud_mozo", HTTP_GET, [=](AsyncWebServerRequest* request){
+        servidor->on("/notificar_recepcion_solicitud_mozo", HTTP_GET, [=](AsyncWebServerRequest *request) {
             display->asignarEstado(STAND_BY);
             request->send(200, "text/plain", "Notificacion recibida");
         });
 
-        servidor->on("/notificar_espera", HTTP_GET, [=](AsyncWebServerRequest* request){
-            AsyncWebParameter* parametroMinutos = request->getParam(0);
+        servidor->on("/notificar_espera", HTTP_GET, [=](AsyncWebServerRequest *request) {
+            AsyncWebParameter *parametroMinutos = request->getParam(0);
 
             if (parametroMinutos != NULL && parametroMinutos->name() == "minutos" &&
-                esNumero(parametroMinutos->value())) {
+                esNumero(parametroMinutos->value()))
+            {
 
                 int minutos = parametroMinutos->value().toInt();
-                if (minutos >= 0 && minutos <= 99) {
+                if (minutos >= 0 && minutos <= 99)
+                {
                     display->asignarNumero(minutos);
                     display->asignarEstado(MOSTRANDO_NUMERO);
                     request->send(200, "text/plain", "Notificacion recibida");
@@ -83,7 +94,7 @@ void Mensajero::inicializarServidor() {
             request->send(400, "text/plain", "Error de parametros");
         });
 
-        servidor->on("/notificar_mesa_lista", HTTP_GET, [=](AsyncWebServerRequest* request){
+        servidor->on("/notificar_mesa_lista", HTTP_GET, [=](AsyncWebServerRequest *request) {
             matrizLeds->encender();
             controladorAlertas->encender();
             request->send(200, "text/plain", "Notificacion recibida");
@@ -93,11 +104,13 @@ void Mensajero::inicializarServidor() {
     }
 }
 
-void Mensajero::intentarConectarseAServidor() {
+void Mensajero::intentarConectarseAServidor()
+{
     WiFi.begin("ESP32", "12345678");
     int intentos = 10;
 
-    while (WiFi.status() != WL_CONNECTED && intentos > 0) {
+    while (WiFi.status() != WL_CONNECTED && intentos > 0)
+    {
         Serial.println("Conectando a servidor...");
         intentos--;
         delay(500);
@@ -106,8 +119,10 @@ void Mensajero::intentarConectarseAServidor() {
     Serial.println(intentos > 0 ? "Conectado" : "No se pudo conectar");
 }
 
-void Mensajero::notificarRegistro() {
-    if (WiFi.status() == WL_CONNECTED) {
+void Mensajero::notificarRegistro()
+{
+    if (WiFi.status() == WL_CONNECTED)
+    {
         String ip = WiFi.localIP().toString();
         String ruta = "http://192.168.1.2/registrarse?id=" + String(_id) + "&ip=" + ip;
         Serial.print("Enviando ");
@@ -120,11 +135,14 @@ void Mensajero::notificarRegistro() {
     }
 }
 
-bool Mensajero::esNumero(String parametro) {
-    for (int i = 0; i < parametro.length(); i++) {
+bool Mensajero::esNumero(String parametro)
+{
+    for (int i = 0; i < parametro.length(); i++)
+    {
         char caracter = parametro.charAt(i);
-        
-        if (!isDigit(caracter)) {
+
+        if (!isDigit(caracter))
+        {
             return false;
         }
     }

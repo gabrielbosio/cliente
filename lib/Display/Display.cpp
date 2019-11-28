@@ -2,9 +2,9 @@
 
 #include "Display.h"
 
-Display::Display(int a, int b, int c, int d, int e, int f, int g, int mux0, int mux1) :
-    segmentoA(a), segmentoB(b), segmentoC(c), segmentoD(d), segmentoE(e), segmentoF(f),
-    segmentoG(g), mux0(mux0), mux1(mux1) {
+Display::Display(int a, int b, int c, int d, int e, int f, int g, int mux0, int mux1) : segmentoA(a), segmentoB(b), segmentoC(c), segmentoD(d), segmentoE(e), segmentoF(f),
+                                                                                        segmentoG(g), mux0(mux0), mux1(mux1)
+{
 
     pinMode(a, OUTPUT);
     pinMode(b, OUTPUT);
@@ -18,35 +18,40 @@ Display::Display(int a, int b, int c, int d, int e, int f, int g, int mux0, int 
     pinMode(mux1, OUTPUT);
 }
 
-void Display::actualizar() {
-    switch (estado) {
-        case STAND_BY:
-            mostrarStandBy();
-            break;
-        
-        case CARGANDO:
-            mostrarCargando();
-            break;
+void Display::actualizar()
+{
+    switch (estado)
+    {
+    case STAND_BY:
+        mostrarStandBy();
+        break;
 
-        case MOSTRANDO_NUMERO:
-            realizarTareaMostrarNumero(numero);
-            break;
-        default:
-            Serial.println("Estado Display Erroneo");
+    case CARGANDO:
+        mostrarCargando();
+        break;
+
+    case MOSTRANDO_NUMERO:
+        realizarTareaMostrarNumero(numero);
+        break;
+    default:
+        Serial.println("Estado Display Erroneo");
         break;
     }
 }
 
-void Display::asignarNumero(int n) {
+void Display::asignarNumero(int n)
+{
     numero = n;
 }
 
-void Display::asignarEstado(int e) {
+void Display::asignarEstado(int e)
+{
     estado = e;
 }
 
 // Loop de tarea ejecutada en paralelo
-void Display::realizarTareaMostrarNumero(int numero) {
+void Display::realizarTareaMostrarNumero(int numero)
+{
     int primerDigito = floor(numero / 10);
     int segundoDigito = numero % 10;
     mostrar(numeros[primerDigito], 0);
@@ -56,7 +61,8 @@ void Display::realizarTareaMostrarNumero(int numero) {
 }
 
 // Muestra dos lineas en el medio del display, indicando stand by
-void Display::mostrarStandBy() {
+void Display::mostrarStandBy()
+{
     mostrar(standBy, 0);
     delay(5);
     mostrar(standBy, 1);
@@ -64,11 +70,14 @@ void Display::mostrarStandBy() {
 }
 
 // Muestra una animacion de carga
-void Display::mostrarCargando() {
+void Display::mostrarCargando()
+{
 
-    if (longitudAnimacionCargando%10 == 0) {
+    if (longitudAnimacionCargando % 10 == 0)
+    {
         posicionAnimacionCargando++;
-        if (posicionAnimacionCargando == 6) {
+        if (posicionAnimacionCargando == 6)
+        {
             posicionAnimacionCargando = 0;
         }
     }
@@ -81,7 +90,8 @@ void Display::mostrarCargando() {
 }
 
 // Muestra, multiplexando, un digito en el display
-void Display::mostrar(int* numero, int mux) {
+void Display::mostrar(int *numero, int mux)
+{
     digitalWrite(segmentoA, numero[0]);
     digitalWrite(segmentoB, numero[1]);
     digitalWrite(segmentoC, numero[2]);
@@ -89,11 +99,14 @@ void Display::mostrar(int* numero, int mux) {
     digitalWrite(segmentoE, numero[4]);
     digitalWrite(segmentoF, numero[5]);
     digitalWrite(segmentoG, numero[6]);
-    
-    if (mux == 0) {
+
+    if (mux == 0)
+    {
         digitalWrite(mux0, 1);
         digitalWrite(mux1, 0);
-    } else if (mux == 1) {
+    }
+    else if (mux == 1)
+    {
         digitalWrite(mux0, 0);
         digitalWrite(mux1, 1);
     }
