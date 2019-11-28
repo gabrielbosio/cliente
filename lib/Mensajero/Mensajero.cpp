@@ -97,6 +97,7 @@ void Mensajero::inicializarServidor()
         });
 
         servidor->on("/notificar_mesa_lista", HTTP_GET, [=](AsyncWebServerRequest *request) {
+            this->display->asignarEstado(STAND_BY);
             this->matrizLeds->encender();
             this->controladorAlertas->encender();
             request->send(200, "text/plain", "Notificacion recibida");
