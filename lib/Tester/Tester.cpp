@@ -1,16 +1,19 @@
 #include "Tester.h"
 
-Tester::Tester(Display *display, MatrizLeds *matrizLeds) : display(display), matrizLeds(matrizLeds) {}
+Tester::Tester(Display *display, MatrizLeds *matrizLeds,
+               ControladorAlertas *controladorAlertas) : display(display),
+               matrizLeds(matrizLeds), controladorAlertas(controladorAlertas) {}
 
 void Tester::ejecutar()
 {
     Serial.println("Comienza test");
-    display->asignarNumero(88);
-    display->asignarEstado(MOSTRANDO_NUMERO);
+    this->display->asignarNumero(88);
+    this->display->asignarEstado(MOSTRANDO_NUMERO);
     delay(2000);
-    display->asignarEstado(STAND_BY);
-    matrizLeds->encender();
+    this->display->asignarEstado(STAND_BY);
+    this->matrizLeds->encender();
     delay(2000);
+    this->controladorAlertas->encender(2000);
     Serial.println("Termina test");
-    matrizLeds->apagar();
+    this->matrizLeds->apagar();
 }

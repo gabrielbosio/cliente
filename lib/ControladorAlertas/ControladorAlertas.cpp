@@ -11,6 +11,12 @@ void ControladorAlertas::encender()
     ledcWriteTone(0, FRECUENCIA_BUZZER_ON);
 }
 
+void ControladorAlertas::encender(int tiempo) {
+    this->encender();
+    delay(tiempo);
+    this->apagar();
+}
+
 void ControladorAlertas::apagar()
 {
     ledcWriteTone(0, FRECUENCIA_BUZZER_OFF);

@@ -2,7 +2,8 @@
 #include <WiFi.h>
 
 Mensajero::Mensajero(byte id, ControladorAlertas *controladorAlertas, Display *display,
-                     MatrizLeds *matrizLeds) : _id(id), controladorAlertas(controladorAlertas), display(display), matrizLeds(matrizLeds)
+                     MatrizLeds *matrizLeds) : _id(id), controladorAlertas(controladorAlertas),
+                     display(display), matrizLeds(matrizLeds)
 {
 
     servidor = new AsyncWebServer(80);
@@ -73,6 +74,7 @@ void Mensajero::inicializarServidor()
 
         servidor->on("/notificar_recepcion_solicitud_mozo", HTTP_GET, [=](AsyncWebServerRequest *request) {
             display->asignarEstado(STAND_BY);
+            this->controladorAlertas->encender(100);
             request->send(200, "text/plain", "Notificacion recibida");
         });
 
@@ -82,12 +84,12 @@ void Mensajero::inicializarServidor()
             if (parametroMinutos != NULL && parametroMinutos->name() == "minutos" &&
                 esNumero(parametroMinutos->value()))
             {
-
                 int minutos = parametroMinutos->value().toInt();
                 if (minutos >= 0 && minutos <= 99)
                 {
-                    display->asignarNumero(minutos);
-                    display->asignarEstado(MOSTRANDO_NUMERO);
+                    this->display->asignarNumero(minutos);
+                    this->display->asignarEstado(MOSTRANDO_NUMERO);
+                    this->controladorAlertas->encender(100);
                     request->send(200, "text/plain", "Notificacion recibida");
                 }
             }
@@ -95,8 +97,8 @@ void Mensajero::inicializarServidor()
         });
 
         servidor->on("/notificar_mesa_lista", HTTP_GET, [=](AsyncWebServerRequest *request) {
-            matrizLeds->encender();
-            controladorAlertas->encender();
+            this->matrizLeds->encender();
+            this->controladorAlertas->encender();
             request->send(200, "text/plain", "Notificacion recibida");
         });
 

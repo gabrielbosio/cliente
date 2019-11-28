@@ -14,6 +14,7 @@ class ControladorAlertas
 public:
     ControladorAlertas();
     void encender();
+    void encender(int tiempo);
     void apagar();
 };
 

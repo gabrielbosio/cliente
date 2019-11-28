@@ -7,6 +7,7 @@ void AccionTiempoEspera::ejecutar(int estadoActualPinSwitch, int estadoAnteriorP
 {
     if (estadoActualPinSwitch == HIGH && estadoAnteriorPinSwitch == LOW)
     {
+        Serial.println("TIEMPO ESPERA");
         mensajero->notificarConsultaEspera();
     }
 }
