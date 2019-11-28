@@ -16,6 +16,7 @@ class Mensajero {
         void notificarPedidoMozo();
         void notificarAck();
         void notificarConsultaEspera();
+        void notificarRegistro();
     private:
         byte _id;
         ControladorAlertas* controladorAlertas;
@@ -25,7 +26,6 @@ class Mensajero {
         AsyncWebServer* servidor;
         void inicializarServidor();
         void intentarConectarseAServidor();
-        void notificarRegistro();
         bool esNumero(String parametro);
 };
 

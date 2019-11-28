@@ -9,11 +9,8 @@ void AccionAsignarId::ejecutar(int estadoActualPinSwitch, int estadoAnteriorPinS
         Serial.print("ID = ");
         Serial.println(id);
         mensajero->asignarId(id);
-        Serial.print("mensajero->id()");
-        Serial.println(mensajero->id());
+        mensajero->notificarRegistro();
         manejadorFlash->grabarID(id);
-        Serial.print("manejadorFlash->leerID()");
-        Serial.println(manejadorFlash->leerID());
         tecladoCliente->reiniciar();
     }
 }

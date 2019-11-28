@@ -57,7 +57,6 @@ void setup() {
     Serial.println(id);
     delay(1000);
     mensajero = new Mensajero(id, controladorAlertas, display, matrizLeds);
-    Serial.println("mensajero creado");
     tecladoCliente = new TecladoCliente(PIN_SWITCH_1, PIN_SWITCH_2, PIN_SWITCH_3, PIN_SWITCH_4,
                                         controladorAlertas, display, matrizLeds, mensajero, manejadorFlash);
     tester = new Tester(display, matrizLeds);

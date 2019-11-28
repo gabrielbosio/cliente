@@ -4,7 +4,7 @@ ManejadorFlash::ManejadorFlash()
 {
   if (!EEPROM.begin(EEPROM_SIZE))
   {
-    Serial.println("Failed to initialise EEPROM");
+    Serial.println("Fallo en inicializar EEPROM");
   }
   this->definirAddress();
 }
