@@ -62,7 +62,7 @@ void setup()
     mensajero = new Mensajero(id, controladorAlertas, display, matrizLeds);
     tecladoCliente = new TecladoCliente(PIN_SWITCH_1, PIN_SWITCH_2, PIN_SWITCH_3, PIN_SWITCH_4,
                                         controladorAlertas, display, matrizLeds, mensajero, manejadorFlash);
-    tester = new Tester(display, matrizLeds);
+    tester = new Tester(display, matrizLeds, controladorAlertas);
 }
 
 void loop()
